@@ -8,6 +8,9 @@ from __future__ import print_function
 import re
 import sys
 
+#Data line number used for calculation processing
+ln=0
+
 #
 # do_drlatr function parsing string pattern
 # drlatr  shift2_reg_reg_0__0_U_0 (.rsb ( bufnet_0 ) , .ackout ( n1_N ) , .ackin ( n2_N ) , .f_d ( f_q1_N ) , .t_d ( t_q1_N ) , .f_q ( f_q2_N ) , .t_q ( t_q2_N ));
@@ -78,6 +81,14 @@ def parse(line):
 		outstr += do_th(key,value)
 	elif re.search('drlat(r|n)',key):
 		outstr += do_drlatr(key,value)
+	elif key == "wire" or \
+		key == "assign" or	\
+		key == "module" or	\
+		key == "endmodule" or	\
+		re.search('\/\/',key):
+		pass
+	else:
+		print("Line " + str(ln) + " not handle:\"" + line + "\"\n")
 	return outstr
 
 #
@@ -103,6 +114,8 @@ def main():
 
 	# repeat read line from file
 	for line in ifd:
+		global ln
+		ln+=1
 		data = parse(line)
 		# try to write data into file
 		try:
