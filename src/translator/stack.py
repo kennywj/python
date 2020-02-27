@@ -21,6 +21,12 @@ class Stack:
  
 	def get(self):
 		return self.items
+	
+	def __repr__(self):
+		s=""
+		for i in self.items:
+			s += str(i) + ","
+		return s
 		
 # unit test
 # Test cases create a new node, then display it
@@ -31,7 +37,7 @@ s = Stack()
 s.push(1)
 s.push(2)
 s.push(3)
-
+print(s)
 print(s.isEmpty())
 
 print(s.peek())
@@ -47,5 +53,4 @@ s.push(4)
 print(s.isEmpty())
 s.pop()
 print(s.isEmpty())
-
 '''

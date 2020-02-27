@@ -9,7 +9,7 @@ def show(n, l):
 		print(i+"<-",end='')
 	print('\n')
 	return
-	
+
 class Graph:
 	# graph is a dictionary, key is in/out edge, data is vetex, color and out/in edge
 	def __init__(self):
@@ -33,15 +33,15 @@ class Graph:
 
 	def getkeys(self):
 		return self.items.keys()
-	
+
 	def getvertex(self, k):
 		return self.items[k].getvertex()
-		
+
 	def bfs(self,k):
 		# Create a queue for BFS, a queued for visited edge and node
 		queue = []
 		visited = []
-		
+
 		visited.append(k)
 		n = self.items[k]
 		#visited.append(n.getvertex())
@@ -59,7 +59,7 @@ class Graph:
 						queue.append(e)
 		print(visited)
 		return
-		
+
 	def dfs(self, k):
 		n = self.items[k]
 		e = n.getedge()
@@ -84,29 +84,16 @@ class Graph:
 		#pop edge from stack
 		self.path.pop()
 		return
-	
+
 	def gettrace(self):
 		return self.trace
-	
+
 	def cleartrace(self):
 		self.trace.clear()
 		return
-		
-	def show(self):
-		keys = self.items.keys()
-		for k in keys:
-			# get diction's data element
-			n = self.items[k]
-			print ("key ="+ k + ", vertex= " + n.getvertex() + \
-				" color " + str(n.getcolor()) +" edge = [", end='')
-			e = n.getedge()
-			for j in e:
-				print (j + ",", end="")
-			print("]")
-		return
-		
+
 	def invert(self):
-		# create a new graph 
+		# create a new graph
 		ig = Graph()
 		keys = self.items.keys()
 		for k in keys:
@@ -121,14 +108,33 @@ class Graph:
 					ig.items[e] = node.Node()
 					x = ig.items[e]
 					x.setvertex(v)
-					x.setcolor(c)	
+					x.setcolor(c)
 				else:
 					x = ig.items[e]
 				if k not in x.getedge():
 					x.addedge(k)
 		return ig
-	
-#	
+
+	def __repr__(self):
+		s =""
+		keys = self.items.keys()
+		for k in keys:
+			# get diction's data element
+			n = self.items[k]
+			s += "key ="+ k + ", vertex= " + n.getvertex() + \
+				" color " + str(n.getcolor()) + " edge = ["
+			e = n.getedge()
+			while (e):
+				s += e.pop(0)
+				if len(e)>0:
+					s += ','
+			s += "]\n"
+		return s
+
+	def show(self):
+		return print(self)
+
+#
 # uinit test
 # test case: initial test graph and show graph
 # give virtual line OUTPUT_[0-9], INPUT_[0-9]
@@ -152,7 +158,9 @@ g.add("L2",["INUPT","INPUT_1"])
 g.add("L1",["INUPT","INPUT_0"])
 
 print("Original Graph")
+#print(g)
 g.show()
+#repr(g)
 '''
 #
 # test case:  do DFS search graph and show result
