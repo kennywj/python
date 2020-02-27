@@ -31,7 +31,7 @@ class Neighbor:
 		return self.vertex == v and self.edge == e
 	
 	def __repr__(self):
-		return "[" + self.vertex + "," + self.edge + "]"
+		return "(" + self.vertex + "," + self.edge + ")"
 
 #
 # unit test

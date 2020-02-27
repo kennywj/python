@@ -3,11 +3,16 @@ import vertex
 import stack
 import re
 
+#
+# vGraph class is vertex name(key) and vertex classe (data) pair dictionary
+#
+#
 class vGraph:
 	# graph is a dictionary, key is in/out edge, data is vetex, color and out/in edge
 	def __init__(self):
 		self.items={}
 		self.path=stack.Stack()
+		self.trace=[]
 		return
 
 	def add(self, k):
@@ -22,19 +27,17 @@ class vGraph:
 		v = self.items[k]
 		v.setname(k)
 		return
-		
+
 	def getkeys(self):
 		return self.items.keys()
 
 	def getvertex(self, k):
 		return self.items[k]
-		
-	def bfs(self,k):
-		return
-		
+
 	def dfs(self,k):
+		# BFS search vertex in graph
 		if not self.items.get(k):
-			print("Vertex " + k + "not exist!")
+			print("Vertex " + k + " not exist!")
 			return
 		# get vertex
 		v = self.items[k]
@@ -44,14 +47,51 @@ class vGraph:
 		n = v.getneighbor()
 		if not n:
 			# neighbor is null, show path
-			print(self.path)
+			# get path lists
+			l = self.path.get().copy()
+			self.trace.append(l)
+			#print(self.path)
 		else:
 			#for each neighbor in neighbor list, do DFS
 			for i in n:
 				self.dfs(i.getvertex())
 		self.path.pop()
 		return
+
+	def bfs(self, k):
+		# BFS search vertex in graph
+		if not self.items.get(k):
+			print("Vertex " + k + " not exist!")
+			return
+		# get vertex
+		queue = []
+		visited = []
+		self.trace.clear()
 		
+		vertex = self.items[k]
+		visited.append(vertex)
+		queue.append(vertex.getname())
+		while(queue):
+			# get first vertex
+			vname = queue.pop(0)
+			self.trace.append(vname)
+			# get data in dictionary by vertex name
+			vertex = self.items[vname]
+			# get neighbor list
+			n = vertex.getneighbor()
+			if not n:
+				# it is end vertex if without neighbor
+				pass
+			else:
+				# sequencial put neighbor which does not visited into queue
+				for i in n:
+					vname = i.getvertex()
+					v = self.items[vname]
+					if vname not in visited:
+						queue.append(vname)
+						visited.append(vname)
+		return
+
 	def invert(self):
 		# invert direction grapy INPUT to OUTPUT /OUTPUT to INPUT
 		# create a new graph
@@ -59,21 +99,33 @@ class vGraph:
 		keys = self.items.keys()
 		for k in keys:
 			vertex = self.items[k]
-			for n in vertex.neighbor:
-				name = n.getvertex()
+			name = vertex.getname()
+			if name not in g.items.keys():
+				g.add(name)
+			n = vertex.neighbor
+			for i in n:
+				name = i.getvertex()
 				# in node not in new graph, add it
 				if name not in g.items.keys():
 					g.add(name)
 				v = g.getvertex(name)
-				v.addneighbor(k,n.getedge())
+				v.addneighbor(k,i.getedge())
 		return g
+
+	def gettrace(self):
+		return self.trace
+
+	def cleartrace(self):
+		self.trace.clear()
+		return
+
 	def __repr__(self):
 		s=""
 		keys = self.items.keys()
 		for k in keys:
 			# get diction's data element
 			v = self.items[k]
-			s += str(v) 
+			s += str(v)
 		return s
 #
 # uinit test
@@ -125,15 +177,69 @@ g.add("INPUT_1")
 g.add("INPUT_2")
 g.add("INPUT_3")
 g.add("INPUT_4")
-
+'''
+print("==== Original graph ====")
 print(g)
-#print("Do DFS search path from OUTPUT_0")
-#g.dfs("OUTPUT_0")
-#g.dfs("OUTPUT_1")
+'''
+'''
+print("Do DFS search path from OUTPUT_0")
+g.dfs("OUTPUT_0")
+print(g.gettrace())
+g.dfs("OUTPUT_1")
+print(g.gettrace())
+'''
 
+
+print("==== Invert graph ====")
 ig = g.invert()
 print(ig)
+'''
+ig.bfs("OUTPUT_1")
+'''
 
+print("==== BFS graph search ====")
+ig.cleartrace()
+ig.bfs("INPUT_0")
+print(ig.gettrace())
+
+ig.cleartrace()
+ig.bfs("INPUT_1")
+print(ig.gettrace())
+
+ig.cleartrace()
+ig.bfs("INPUT_2")
+print(ig.gettrace())
+
+ig.cleartrace()
+ig.bfs("INPUT_3")
+print(ig.gettrace())
+
+ig.cleartrace()
+ig.bfs("INPUT_4")
+print(ig.gettrace())
+
+'''
+print("==== DFS graph search ====")
+g.cleartrace()
+ig.dfs("INPUT_0")
+print(g.gettrace())
+
+g.cleartrace()
+ig.dfs("INPUT_1")
+print(g.gettrace())
+
+g.cleartrace()
+ig.dfs("INPUT_2")
+print(g.gettrace())
+
+g.cleartrace()
+ig.dfs("INPUT_3")
+print(g.gettrace())
+
+g.cleartrace()
+ig.dfs("INPUT_4")
+print(g.gettrace())
+'''
 #
 # test case:  do DFS search graph and show result
 #

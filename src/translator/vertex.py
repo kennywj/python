@@ -20,7 +20,6 @@ class Vertex:
 	def __init__(self):
 		self.name = ""
 		self.color=0
-		self.visited=0
 		self.neighbor=[]
 		return
 
@@ -38,7 +37,7 @@ class Vertex:
 				print("Vertex " + v +", edge " + e + " exist");
 				return
 		# add the new neighbor
-		print("add neighbor" + v +"," + e)
+		#print("add neighbor" + v +"," + e)
 		n = neighbor.Neighbor()
 		n.setnb(v, e)
 		self.neighbor.append(n)
@@ -64,7 +63,7 @@ class Vertex:
 	
 	def getcolor(self):
 		return self.color
-	
+		
 	def __repr__(self):
 		s = "[" + self.name + "], color = " + str(self.color) + "\n"
 		for i in self.neighbor:
