@@ -10,7 +10,7 @@ def show(n, l):
 	print('\n')
 	return
 
-class Graph:
+class eGraph:
 	# graph is a dictionary, key is in/out edge, data is vetex, color and out/in edge
 	def __init__(self):
 		self.items={}
@@ -39,11 +39,17 @@ class Graph:
 
 	def bfs(self,k):
 		# Create a queue for BFS, a queued for visited edge and node
+		# BFS search vertex in graph
+		if not self.items.get(k):
+			print("node " + k + " not exist!")
+			return
 		queue = []
 		visited = []
-
+		
 		visited.append(k)
 		n = self.items[k]
+		self.path.push(k)
+		self.path.push('['+n.vertex+']')
 		#visited.append(n.getvertex())
 		queue.append(k)
 		while(queue):
@@ -54,19 +60,23 @@ class Graph:
 					re.search("^OUTPUT",e)):
 					if e not in visited:
 						visited.append(e)
-						i = self.items[e]
-						#visited.append(i.getvertex())
+						self.path.push(e)
+						self.path.push('['+self.items[e].vertex+']')
 						queue.append(e)
-		print(visited)
+		l = self.path.get().copy()
+		self.trace.append(l)
 		return
 
 	def dfs(self, k):
+		if not self.items.get(k):
+			print("node " + k + " not exist!")
+			return
 		n = self.items[k]
 		e = n.getedge()
 		# push edge into stack
 		self.path.push(k)
 		# push vertex into stack
-		self.path.push('['+n.vertex+']')
+		self.path.push(n.vertex)
 		# vertex is NULL, end of trace
 		if len(e)==1 and \
 			(re.search("^INPUT",e[0]) or \
@@ -74,7 +84,7 @@ class Graph:
 			# get path lists
 			l = self.path.get().copy()
 			self.trace.append(l)
-			#show(len(self.trace), l)
+			show(len(self.trace), l)
 		else:
 			# for each edge in list, do deep seach
 			for i in e:
@@ -94,7 +104,7 @@ class Graph:
 
 	def invert(self):
 		# create a new graph
-		ig = Graph()
+		ig = eGraph()
 		keys = self.items.keys()
 		for k in keys:
 			# get node in graph dictionary
@@ -134,89 +144,6 @@ class Graph:
 	def show(self):
 		return print(self)
 
-#
-# uinit test
-# test case: initial test graph and show graph
-# give virtual line OUTPUT_[0-9], INPUT_[0-9]
-#
-'''
-g = Graph()
-g.add("OUTPUT_0",["OUTPUT","L13"])
-g.add("OUTPUT_1",["OUTPUT","L14"])
-g.add("L13",["N9","L11"])
-g.add("L14",["N8","L7","L10"])
-g.add("L11",["N6","L1","L6"])
-g.add("L10",["N7","L8","L9"])
-g.add("L8",["N4","L2","L3"])
-g.add("L9",["N5","L4","L5"])
-g.add("L7",["N4","L2","L3"])
-g.add("L6",["N4","L2","L3"])
-g.add("L5",["INUPT","INPUT_4"])
-g.add("L4",["INUPT","INPUT_3"])
-g.add("L3",["INUPT","INPUT_2"])
-g.add("L2",["INUPT","INPUT_1"])
-g.add("L1",["INUPT","INPUT_0"])
 
-print("Original Graph")
-#print(g)
-g.show()
-#repr(g)
-'''
-#
-# test case:  do DFS search graph and show result
-#
-'''
-def show_trace(l):	
-	for i in l:
-		n = l.pop()
-		while(len(n)):
-			v = n.pop()
-			if re.search("^OUTPUT_[0-9]",v) or \
-				re.search("^INPUT_[0-9]",v):
-				pass
-			else:
-				print(v,end="")
-				if len(n)>1:
-					print("->",end="")
-		print("\n")
-'''		
-#	
-# Search keys to find initial point (INPUT_XXX) or (OUTPUT_XXX) X is number 0-9
-#
-'''
-keys = g.getkeys()
-for k in keys:
-	if re.search("^OUTPUT_[0-9]",k) or \
-		re.search("^INPUT_[0-9]",k):
-		# do DFS
-		g.dfs(k)
-		show_trace(g.gettrace())
-		g.cleartrace()
-'''
-#
-# test case:  invert graph, i.e. change initial point from OUTPUT_[0-9] to INPUT_[0-9]
-#
-'''
-print("\nInvert Graph")
-ig = g.invert()
-ig.show()
-
-print("\nInvert Graph again")
-g2 = ig.invert()
-g2.show()
-'''
-#
-# test case:  do BFS search graph and show result
-#
-'''
-keys = g.getkeys()
-#print(keys)
-for k in keys:
-	if re.search("^INPUT_[0-9]",k) or \
-		re.search("^OUTPUT_[0-9]",k):
-		g.bfs(k)
-		show_trace(g.gettrace())
-		g.cleartrace()
-'''
 
 

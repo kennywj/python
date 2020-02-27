@@ -1,7 +1,7 @@
 
 import sys
 import re
-from gengraph import gengraph
+from gengraph import gen_egraph
 
 def show_trace(l):	
 	id=0
@@ -42,7 +42,7 @@ def main():
 	if len(sys.argv) <= 1:
 		print ("dft_trace.py <inputfile> [<outputfile>]")
 		sys.exit()
-	g = gengraph(sys.argv[1])
+	g = gen_egraph(sys.argv[1])
 	if not g:
 		print("cannot create graph, exit")
 		sys.exit()
@@ -53,6 +53,7 @@ def main():
 	except:
 		pass
 		
+	print(g)
 	# trace 1 OUTPUT line for test
 	g.dfs("OUTPUT_0")
 	l = g.gettrace()
@@ -62,8 +63,12 @@ def main():
 	except:
 		show_trace(l)
 	g.cleartrace()
-	ofd.close()
-'''	
+	try:
+		ofd.close()
+	except:
+		pass
+		
+	'''	
 	keys = g.getkeys()	
 	#print(len(keys))
 
@@ -72,7 +77,7 @@ def main():
 	#		re.search("^OUTPUT",k):
 		if re.search("^OUTPUT",k):
 			g.dfs(k)
-'''
+	'''
 #
 # end main progam
 #

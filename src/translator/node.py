@@ -37,30 +37,10 @@ class Node:
 	def getcolor(self):
 		return self.color
 	
-	def show(self):
-		print("Vertex = " + self.vertex + ", color = " + str(self.color) +" edge =", end='')
+	def __repr__(self):
+		s = "Vertex = " + self.vertex + ", color = " + str(self.color) +" edge ="
 		for i in self.edge:
-			print( i + ",", end ="")
-		print("");
-		return
+			s += i + ","
+		s+="\n";
+		return s
 
-# unit test
-# Test cases create a new node, then display it
-#
-'''
-n = Node()
-n.setvertex("III")
-n.setcolor(1)
-n.addedge("line0")
-n.addedge("line0")
-n.addedge("line1")
-n.addedge("line2")
-e = n.getedge()
-for i in e:
-	print(i)
-n.show()
-n.deledge("line2")
-n.deledge("line3")
-n.setcolor(2)
-n.show()
-'''

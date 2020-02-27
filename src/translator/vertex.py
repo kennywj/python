@@ -34,7 +34,7 @@ class Vertex:
 		# verify if this not already in list?
 		for n in self.neighbor:
 			if n.issame(v,e):
-				print("Vertex " + v +", edge " + e + " exist");
+				#print("Vertex " + v +", edge " + e + " exist");
 				return
 		# add the new neighbor
 		#print("add neighbor" + v +"," + e)
@@ -70,29 +70,3 @@ class Vertex:
 			s += "   neighbor --"+ i.getedge() + "->[" + i.getvertex() +"]\n"
 		s+="\n"
 		return s
-#
-# unit test
-# Test cases create a new vertex, test methods of vertex
-#
-'''
-v = Vertex()
-
-v.setname("INPUT_0")
-v.setcolor(1)
-v.addneighbor("N1","e1")
-v.addneighbor("N2","e2")
-v.addneighbor("N3","e3")
-v.addneighbor("N4","e4")
-v.addneighbor("N4","e4")
-v.addneighbor("N3","e3")
-print(v)
-
-print("Is N1 neighbor? " + str(v.isneighbor("N1")))
-v.delneighbor("N1")
-print(v)
-print("Is N1 neighbor? " + str(v.isneighbor("N1")))
-
-v.delneighbor("N1")
-v.delneighbor("N3")
-print(v)
-'''

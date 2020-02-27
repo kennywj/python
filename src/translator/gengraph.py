@@ -4,11 +4,13 @@
 from __future__ import print_function
 import re
 import sys
-import graph
+import egraph
+import vgraph
 
 index = 0
 input_id = 0
 output_id = 0
+
 #
 # function: add_netdb
 # parsing "INPUT(f_coef[3])" into INPUT and f_coef[3] and then put f_coef[3] as key, INPUT into list
@@ -28,13 +30,14 @@ def add_netdb(line, db):
 			print("ignore : " + line)
 			pass
 		else:
+			value += "_" + str(output_id)
 			# add list[0] vetex
 			e.append(value)
 			# add list[1] input line edge
 			e.append(key)
 			#print("key= "+ key + ", vertex= " + value + ", virtual output line= ", value + "_" + key)
 			global output_id
-			db.add(value + "_" + str(output_id), e)
+			db.add(value, e)
 			output_id += 1
 	elif re.search('^INPUT',line):
 		# INPUT(xxx) ==> add xxx as key, virtual line "INPUT_xxx" as ouput line to other (edge)
@@ -45,11 +48,13 @@ def add_netdb(line, db):
 			print("ignore : " + line)
 			pass
 		else:
+			global input_id
+			value += "_" + str(input_id)
 			# add list[0] vetex
 			e.append(value)
 			# add list[1] output virtual line
 			global input_id
-			e.append(value + "_" + str(input_id))
+			e.append(value)
 			input_id += 1
 			#print("key= "+ key + ", vertex= " + value + ", virtual output line= ", value + "_" + key)
 			db.add(key, e)
@@ -81,9 +86,9 @@ def add_netdb(line, db):
 			db.add(k, e)
 	return
 #
-# start main program
+# generate edge graph
 #
-def gengraph(file):
+def gen_egraph(file):
 	data = ""
 	print("\nDo generate graph...");
 	# try to open read file
@@ -93,7 +98,7 @@ def gengraph(file):
 		print ("Could not open read file \"", file,"\"")
 		return
 	# initial a graph
-	g = graph.Graph()
+	g = egraph.eGraph()
 	index = 0
 	input_id = 0
 	output_id = 0
@@ -104,3 +109,45 @@ def gengraph(file):
 	ifd.close()
 	return g
 
+#
+# generate vertex graph from trace of edeg graph
+#
+'''
+def gen_vgraph(g):
+	g.dfs("OUTPUT_0")
+	l = g.gettrace()
+	print(l)
+	
+
+	keys = g.getkeys()
+	vg = vGraph()
+	for k in keys:
+		if re.search("^OUTPUT",k):
+			g.dfs(k)
+			l = g.gettrace()
+			
+
+	return vg
+'''
+#
+# uinit test
+# test case: initial test vertex graph and add vertex
+# show graph
+#
+
+# try to open read file
+if len(sys.argv) <= 1:
+	print ("gengraph.py <inputfile>")
+	sys.exit()
+	
+g = gen_egraph(sys.argv[1])
+if g:
+	print(g)
+	g.dfs("OUTPUT_0")
+	l = g.gettrace()
+	print(l)
+	# genreate vetex graph
+	#vg = gen_vgraph(g)
+	#print(vg)
+else:
+	print("cannot create graph, exit")
