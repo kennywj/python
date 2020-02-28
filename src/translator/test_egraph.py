@@ -31,8 +31,8 @@ def show_trace(l):
 # show graph
 #
 g = egraph.eGraph()
-g.add("OUTPUT_0",["OUTPUT","L13"])
-g.add("OUTPUT_1",["OUTPUT","L14"])
+g.add("OUTPUT_0",["OUTPUT_0","L13"])
+g.add("OUTPUT_1",["OUTPUT_1","L14"])
 g.add("L13",["N9","L11"])
 g.add("L14",["N8","L7","L10"])
 g.add("L11",["N6","L1","L6"])
@@ -41,11 +41,11 @@ g.add("L8",["N4","L2","L3"])
 g.add("L9",["N5","L4","L5"])
 g.add("L7",["N4","L2","L3"])
 g.add("L6",["N4","L2","L3"])
-g.add("L5",["INUPT","INPUT_4"])
-g.add("L4",["INUPT","INPUT_3"])
-g.add("L3",["INUPT","INPUT_2"])
-g.add("L2",["INUPT","INPUT_1"])
-g.add("L1",["INUPT","INPUT_0"])
+g.add("L5",["INUPT_4","INPUT_4"])
+g.add("L4",["INUPT_3","INPUT_3"])
+g.add("L3",["INUPT_2","INPUT_2"])
+g.add("L2",["INUPT_1","INPUT_1"])
+g.add("L1",["INUPT_0","INPUT_0"])
 
 #print("===> Original Graph")
 #print(g)
@@ -64,6 +64,7 @@ for k in keys:
 # test case:  do BFS search graph and show result
 # Search keys to find initial point (INPUT_XXX) or (OUTPUT_XXX) X is number 0-9
 #
+'''
 print("===> Do BSF trace Graph")
 keys = g.getkeys()
 for k in keys:
@@ -73,7 +74,7 @@ for k in keys:
 		g.bfs(k)
 		show_trace(g.gettrace())
 		g.cleartrace()
-
+'''
 #
 # test case:  invert graph, i.e. change initial point from OUTPUT_[0-9] to INPUT_[0-9]
 #

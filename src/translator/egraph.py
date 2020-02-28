@@ -16,6 +16,7 @@ class eGraph:
 		self.items={}
 		self.path=stack.Stack()
 		self.trace=[]
+		self.count=0
 		return
 
 	def add(self, k, e):
@@ -49,7 +50,7 @@ class eGraph:
 		visited.append(k)
 		n = self.items[k]
 		self.path.push(k)
-		self.path.push('['+n.vertex+']')
+		self.path.push('('+n.vertex+')')
 		#visited.append(n.getvertex())
 		queue.append(k)
 		while(queue):
@@ -61,7 +62,7 @@ class eGraph:
 					if e not in visited:
 						visited.append(e)
 						self.path.push(e)
-						self.path.push('['+self.items[e].vertex+']')
+						self.path.push('('+self.items[e].vertex+')')
 						queue.append(e)
 		l = self.path.get().copy()
 		self.trace.append(l)
@@ -83,8 +84,9 @@ class eGraph:
 			re.search("^OUTPUT",e[0])):
 			# get path lists
 			l = self.path.get().copy()
-			self.trace.append(l)
-			show(len(self.trace), l)
+			#self.trace.append(l)
+			self.count += 1
+			show(self.count, l)
 		else:
 			# for each edge in list, do deep seach
 			for i in e:
@@ -101,7 +103,13 @@ class eGraph:
 	def cleartrace(self):
 		self.trace.clear()
 		return
-
+		
+	def clear(self):
+		self.count = 0
+		self.trace.clear()
+		self.path.clear()
+		return
+		
 	def invert(self):
 		# create a new graph
 		ig = eGraph()

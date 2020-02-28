@@ -142,7 +142,8 @@ if len(sys.argv) <= 1:
 	
 g = gen_egraph(sys.argv[1])
 if g:
-	print(g)
+	#print(g)
+	g.clear()
 	g.dfs("OUTPUT_0")
 	l = g.gettrace()
 	print(l)

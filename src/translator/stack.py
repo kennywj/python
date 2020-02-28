@@ -22,6 +22,9 @@ class Stack:
 	def get(self):
 		return self.items
 	
+	def clear(self):
+		return self.items.clear()
+
 	def __repr__(self):
 		s=""
 		for i in self.items:
