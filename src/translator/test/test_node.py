@@ -1,3 +1,5 @@
+import sys
+sys.path.append('../')
 import node
 # unit test
 # Test cases create a new node, then display it
