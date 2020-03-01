@@ -11,19 +11,13 @@ import egraph
 #
 
 
-def show_trace(l):	
-	for i in l:
-		n = l.pop()
-		while(len(n)):
-			v = n.pop()
-			if re.search("^OUTPUT_[0-9]",v) or \
-				re.search("^INPUT_[0-9]",v):
-				pass
-			else:
-				print(v,end="")
-				if len(n)>1:
-					print("->",end="")
-		print("\n")
+def show_trace(n, l):
+	print("path ("+ str(n)+ "):", end="")
+	while(l):
+		print(l.pop(0),end='')
+		if len(l)!=0:
+			print("->",end="")
+	print('\n')
 
 
 #
@@ -57,9 +51,10 @@ for k in keys:
 	if re.search("^OUTPUT_[0-9]",k) or \
 		re.search("^INPUT_[0-9]",k):
 		# do DFS
-		g.dfs(k)
-		show_trace(g.gettrace())
-		g.cleartrace()
+		#g.dfs(k, None)
+		g.dfs(k, show_trace)
+		#show_trace(g.gettrace())
+		#g.cleartrace()
 
 #
 # test case:  do BFS search graph and show result

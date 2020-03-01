@@ -1,7 +1,16 @@
-
+#
+# dft_trace, generate edge graph, then remove none latch nodes and translate to vertex graph
+# then do DFS search from OUTPUT to INPUT to list all latch nodes
+#
+import time
+from datetime import timedelta
 import sys
-import re
+sys.path.append('../')
+import egraph
+import vgraph
 from gengraph import gen_egraph
+from gengraph import process
+import timer
 
 def show_trace(l):	
 	id=0
@@ -37,6 +46,15 @@ def write_trace(ofd, l):
 					ofd.write("->")
 		ofd.write("\n")
 		
+		
+def show_progress(g, start_time):
+	count = g.getcount()
+	elapsed_time = time.time() - start_time
+	print(str(timedelta(seconds=int(elapsed_time))),end="")
+	print(" process number = " + str(count),end="\r")
+	return
+
+	
 def main():
 	# try to open read file
 	if len(sys.argv) <= 1:
@@ -46,7 +64,21 @@ def main():
 	if not g:
 		print("cannot create graph, exit")
 		sys.exit()
+	else:
+		g.clear()
 	
+	start_time = time.time()
+	t = timer.RepeatTimer(1, show_progress, [g, start_time])
+	# start timer
+	t.start()
+	vg = vgraph.vGraph()
+	# DFS OUTPUT_0 path, put in vg
+	g.dfs("OUTPUT_0",process, vg)
+	
+	print(vg)
+	# stop timer
+	t.cancel()
+	'''
 	# try to open write file
 	try:
 		ofd = open(sys.argv[2], "w+")
@@ -55,28 +87,19 @@ def main():
 		
 	print(g)
 	# trace 1 OUTPUT line for test
-	g.dfs("OUTPUT_0")
-	l = g.gettrace()
+	g.dfs("OUTPUT_0", None)
 	# try to write data into file
 	try:
 		write_trace(ofd, l)
 	except:
-		show_trace(l)
+		pass
+		
 	g.cleartrace()
+	
 	try:
 		ofd.close()
 	except:
 		pass
-		
-	'''	
-	keys = g.getkeys()	
-	#print(len(keys))
-
-	for k in keys:
-	#	if re.search("^INPUT",k) or \
-	#		re.search("^OUTPUT",k):
-		if re.search("^OUTPUT",k):
-			g.dfs(k)
 	'''
 #
 # end main progam

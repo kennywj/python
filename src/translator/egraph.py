@@ -3,13 +3,18 @@ import node
 import stack
 import re
 
+'''
 def show(n, l):
-	print("["+ str(n) +"] path: ",end='')
+	print("["+ str(n) +"] ",end='')
 	for i in l:
 		print(i+"<-",end='')
 	print('\n')
 	return
-
+'''
+def show(n, l):
+	print(l)
+	return
+	
 class eGraph:
 	# graph is a dictionary, key is in/out edge, data is vetex, color and out/in edge
 	def __init__(self):
@@ -68,7 +73,7 @@ class eGraph:
 		self.trace.append(l)
 		return
 
-	def dfs(self, k):
+	def dfs(self, k, func, arg):
 		if not self.items.get(k):
 			print("node " + k + " not exist!")
 			return
@@ -86,11 +91,14 @@ class eGraph:
 			l = self.path.get().copy()
 			#self.trace.append(l)
 			self.count += 1
-			show(self.count, l)
+			if func!=None:
+				func(arg, l)
+			else:
+				show(None, l)
 		else:
 			# for each edge in list, do deep seach
 			for i in e:
-				self.dfs(i)
+				self.dfs(i, func, arg)
 		#pop vertex from stack
 		self.path.pop()
 		#pop edge from stack
@@ -103,6 +111,9 @@ class eGraph:
 	def cleartrace(self):
 		self.trace.clear()
 		return
+	
+	def getcount(self):
+		return self.count
 		
 	def clear(self):
 		self.count = 0

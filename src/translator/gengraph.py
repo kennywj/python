@@ -108,47 +108,27 @@ def gen_egraph(file):
 	# close read file
 	ifd.close()
 	return g
-
-#
-# generate vertex graph from trace of edeg graph
-#
-'''
-def gen_vgraph(g):
-	g.dfs("OUTPUT_0")
-	l = g.gettrace()
-	print(l)
 	
-
-	keys = g.getkeys()
-	vg = vGraph()
-	for k in keys:
-		if re.search("^OUTPUT",k):
-			g.dfs(k)
-			l = g.gettrace()
-			
-
-	return vg
-'''
 #
-# uinit test
-# test case: initial test vertex graph and add vertex
-# show graph
-#
-
-# try to open read file
-if len(sys.argv) <= 1:
-	print ("gengraph.py <inputfile>")
-	sys.exit()
-	
-g = gen_egraph(sys.argv[1])
-if g:
-	#print(g)
-	g.clear()
-	g.dfs("OUTPUT_0")
-	l = g.gettrace()
-	print(l)
-	# genreate vetex graph
-	#vg = gen_vgraph(g)
-	#print(vg)
-else:
-	print("cannot create graph, exit")
+# handle the egraph dfs result. put in vgraph
+#	
+def process(vg, l):
+	e=""		# edges string
+	l.pop(0) # pop virtual line, not add to edges
+	n = l.pop(0) # head node
+	vg.add(n)
+	v = vg.getvertex(n)
+	while(l):
+		if e:
+			e += "+"
+		e += l.pop(0) # eage to neighbor
+		n = l.pop(0) # neighbor
+		if re.match("^DRLAT[R|N]",n) or \
+			re.match("^INPUT",n):
+			v.addneighbor(n,e)
+			e=""
+			vg.add(n)
+			v = vg.getvertex(n)
+		else:
+			e += "+" + n
+	return	

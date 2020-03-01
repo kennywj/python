@@ -3,4 +3,4 @@ run:
 	python3 dft_trace.py ../../data/result ../../data/pathlog.txt
 
 clean:
-	rm -rf __pycache__ *.pyc 
+	rm -rf __pycache__ *.pyc test/__pycache__ test/*.pyc

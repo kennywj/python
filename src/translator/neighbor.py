@@ -16,6 +16,7 @@ class Neighbor:
 		return
 
 	def getnb(self):
+		# get neighbor node (vertex and edges)
 		n=[]
 		n.append(self.vertex)
 		n.append(self.edge)

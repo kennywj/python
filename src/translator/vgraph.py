@@ -5,14 +5,29 @@ import re
 
 #
 # vGraph class is vertex name(key) and vertex class (data) pair dictionary
+#	 k is vertex, d is a list of node which node is (vertex, edge) pair
+# 		for example: [v0] - e1 - [v1] (v0 connect to V1 via edge e1)
+#					 [v0] - e2 - [v2] (v0 connect to v2 via edge e2) 
+#					 [v1] - e3 - [v2] (v1 connect to v2 via edge e3)
+#					 [v2] - e4 - [v3] (v2 connect to v3 via edge e4)
+#		then then vertex graph should as below
+#		vertex_graph = {
+#			v0 : [[v1,e1], [v2,e2]]
+#			v1 : [[v2,e3]]
+#			v2 : [[v3,e4]]
+#		}
 #
-#
+def show(n, l):
+	print(l)
+	return
+	
 class vGraph:
 	# graph is a dictionary, key is in/out edge, data is vetex, color and out/in edge
 	def __init__(self):
 		self.items={}
 		self.path=stack.Stack()
 		self.trace=[]
+		self.count=0
 		return
 
 	def add(self, k):
@@ -35,7 +50,7 @@ class vGraph:
 	def getvertex(self, k):
 		return self.items[k]
 
-	def dfs(self,k):
+	def dfs(self, k, func, arg):
 		# BFS search vertex in graph
 		if not self.items.get(k):
 			print("Vertex " + k + " not exist!")
@@ -50,12 +65,17 @@ class vGraph:
 			# neighbor is null, show path
 			# get path lists
 			l = self.path.get().copy()
-			self.trace.append(l)
+			#self.trace.append(l)
+			self.count += 1
+			if func!=None:
+				func(arg, l)
+			else:
+				show(None, l)
 			#print(self.path)
 		else:
 			#for each neighbor in neighbor list, do DFS
 			for i in n:
-				self.dfs(i.getvertex())
+				self.dfs(i.getvertex(), func, arg)
 		self.path.pop()
 		return
 
@@ -119,7 +139,13 @@ class vGraph:
 	def cleartrace(self):
 		self.trace.clear()
 		return
-
+		
+	def clear(self):
+		self.count = 0
+		self.trace.clear()
+		self.path.clear()
+		return
+		
 	def __repr__(self):
 		s=""
 		keys = self.items.keys()

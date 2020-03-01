@@ -2,19 +2,9 @@ from __future__ import print_function
 import neighbor
 
 #
-# Vertex graph class
-#    vertex graph {k:d} is s direction graph, 
-#	 k is vertex, d is a list of node which node is (vertex, edge) pair
-# 		for example: [v0] - e1 - [v1] (v0 connect to V1 via edge e1)
-#					 [v0] - e2 - [v2] (v0 connect to v2 via edge e2) 
-#					 [v1] - e3 - [v2] (v1 connect to v2 via edge e3)
-#					 [v2] - e4 - [v3] (v2 connect to v3 via edge e4)
-#		then then vertex graph should as below
-#		vertex_graph = {
-#			v0 : [[v1,e1], [v2,e2]]
-#			v1 : [[v2,e3]]
-#			v2 : [[v3,e4]]
-#		}
+# Vertex class
+#    vertex class is a group of vertex and its neighbors 
+#	 the neighbor is a element of neighbor class
 #
 class Vertex:
 	def __init__(self):
@@ -31,7 +21,7 @@ class Vertex:
 		return self.name
 		
 	def addneighbor(self, v, e):
-		# verify if this not already in list?
+		# verify if this node & edges already in list?
 		for n in self.neighbor:
 			if n.issame(v,e):
 				#print("Vertex " + v +", edge " + e + " exist");
@@ -67,6 +57,6 @@ class Vertex:
 	def __repr__(self):
 		s = "[" + self.name + "], color = " + str(self.color) + "\n"
 		for i in self.neighbor:
-			s += "   neighbor --"+ i.getedge() + "->[" + i.getvertex() +"]\n"
+			s += "   +--"+ i.getedge() + "->[" + i.getvertex() +"]\n"
 		s+="\n"
 		return s
