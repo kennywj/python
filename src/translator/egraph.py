@@ -85,8 +85,7 @@ class eGraph:
 		self.path.push(n.vertex)
 		# vertex is NULL, end of trace
 		if len(e)==1 and \
-			(re.search("^INPUT",e[0]) or \
-			re.search("^OUTPUT",e[0])):
+			re.search("^fake_",e[0]):
 			# get path lists
 			l = self.path.get().copy()
 			#self.trace.append(l)
