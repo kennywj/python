@@ -76,6 +76,7 @@ g = gen_egraph(sys.argv[1])
 if g:
 	#print(g)
 	g.clear()
+	'''
 	start_time = time.time()
 	t = timer.RepeatTimer(1, show_progress, [g, start_time])
 	# start timer
@@ -85,27 +86,16 @@ if g:
 	t.cancel()
 	
 	print(vg)
+	'''
 else:
 	print("cannot create graph, exit")
 
-
-#
-# generate vertex graph from trace of edeg graph
-#
 '''
-def gen_vgraph(g):
-	g.dfs("OUTPUT_0")
-	l = g.gettrace()
-	print(l)
-	
+from gengraph import add_netdb
 
-	keys = g.getkeys()
-	vg = vGraph()
-	for k in keys:
-		if re.search("^OUTPUT",k):
-			g.dfs(k)
-			l = g.gettrace()
-			
+line="bufnet_1=INV4X_637(ackin)"
 
-	return vg
+g = egraph.eGraph()
+
+add_netdb(line, g)
 '''

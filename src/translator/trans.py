@@ -15,7 +15,7 @@ ln=0
 # do_drlatr function parsing string pattern
 # drlatr  shift2_reg_reg_0__0_U_0 (.rsb ( bufnet_0 ) , .ackout ( n1_N ) , .ackin ( n2_N ) , .f_d ( f_q1_N ) , .t_d ( t_q1_N ) , .f_q ( f_q2_N ) , .t_q ( t_q2_N ));
 #
-def do_drlatr(k,v):
+def do_drlatr(k, v, ln):
 	l = v.split(' ',2)[-1]
 	l = l.replace('(', '').replace(')', '').split(',')
 	s1=[]
@@ -27,14 +27,14 @@ def do_drlatr(k,v):
 		else:
 			if (i[0].strip() == '.f_d' or i[0].strip() == '.t_d'):
 				s2.append(i[-1].strip())
-	outstr = '(' +','.join(map(str,s1)) + ')=' + k.upper() + '(' +','.join(map(str, s2)) + ')' + '\n'
+	outstr = '(' +','.join(map(str,s1)) + ')=' + k.upper() +'_'+ str(ln) + '(' +','.join(map(str, s2)) + ')' + '\n'
 	return outstr
 
 #
 # do_th function parsing string pattern
 # th24comp  U71_U_0_U_0 (.y ( f_n1_N_0 ) , .d ( f_n56 ) , .c ( t_n55 ) , .b ( f_n55 ) , .a ( t_n56 ));
 #
-def do_th(k,v):
+def do_th(k, v, ln):
 	l = v.split(' ',2)[-1]
 	l = l.replace('(', '').replace(')', '').split(',')
 	s1 = []
@@ -44,7 +44,7 @@ def do_th(k,v):
 			s1.append(i[-1].strip())
 		else:
 			out = i[-1].strip()
-	outstr = out + '=' + k.upper() + '(' +','.join(map(str, s1)) + ')' + '\n'
+	outstr = out + '=' + k.upper()+'_'+ str(ln) + '(' +','.join(map(str, s1)) + ')' + '\n'
 	return outstr
 
 #
@@ -52,35 +52,37 @@ def do_th(k,v):
 # output [7:0] f_mac_out ;
 # input ackin ;
 #
-def do_io(k,v):
+def do_io(k, v, ln):
+	index=0
 	r = v.split(' ',1)[0]
 	l = v.split(' ',1)[-1]
 	outstr=""
 	if l == r:
-		outstr = k.upper() + '(' + r + ')' + '\n'
+		outstr = k.upper()+'_'+str(ln) + '_' + str(index) + '(' + r + ')' + '\n'
 	else:
 		r = r.replace('[', '').replace(']', '').split(':')
 		end = max(int(r[0]),int(r[1]))
 		start = min(int(r[0]),int(r[1]))
 		for i in range(end, start-1, -1):
-			outstr += k.upper() + '(' + l + '[' + str(i) + '])' +'\n'
+			outstr += k.upper()+'_'+str(ln)+ '_' + str(index) + '(' + l + '[' + str(i) + '])' +'\n'
+			index += 1
 	return outstr
 
-def parse(line):
+def parse(line, ln):
 	outstr=""
 	line = line.replace('\n', '').replace(';', '') 	# remove semicolon and newline
 	l = line.strip(' ');							# remove leading/end spaces
 	key = l.split(' ',1)[0]
 	value = l.split(' ',1)[-1]
 	if key == 'input' or key == 'output':
-		outstr += do_io(key, value);
+		outstr += do_io(key, value, ln);
 	elif re.search('^th[a-z,0-9]', key) or \
 		re.search('^and[0-9]', key) or \
 		re.search('^inv[0-9]*', key) or \
 		re.search('^logic_[0-9]', key):
-		outstr += do_th(key,value)
+		outstr += do_th(key,value,ln)
 	elif re.search('drlat(r|n)',key):
-		outstr += do_drlatr(key,value)
+		outstr += do_drlatr(key, value, ln)
 	elif key == "wire" or \
 		key == "assign" or	\
 		key == "module" or	\
@@ -116,7 +118,7 @@ def main():
 	for line in ifd:
 		global ln
 		ln+=1
-		data = parse(line)
+		data = parse(line, ln)
 		# try to write data into file
 		try:
 			ofd.write(data)
@@ -130,6 +132,7 @@ def main():
 		ofd.close
 	except:
 		pass
+	print("Translation format processing Done.")
 #
 # end main progam
 #
