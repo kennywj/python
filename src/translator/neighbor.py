@@ -21,21 +21,24 @@ class Neighbor:
 		n.append(self.vertex)
 		n.append(self.edge)
 		return n
-	
+
 	def getvertex(self):
 		return self.vertex
-	
+
 	def setedge(self, e):
 		if e not in self.edge:
 			self.edge.append(e)
-		
+
 	def getedge(self):
 		return self.edge
-	
+
 	def issame(self, v):
 		return self.vertex == v
-	
+
 	def __repr__(self):
+		return self.vertex
+
+	def show(self):
 		s = "(" + self.vertex + ":" + ", ".join(self.edge) + ")"
 		return s
 

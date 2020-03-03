@@ -53,7 +53,7 @@ class vGraph:
 	def dfs(self, k, func, arg):
 		# BFS search vertex in graph
 		if not self.items.get(k):
-			print("Vertex " + k + " not exist!")
+			#print("Vertex " + k + " not exist!")
 			return
 		# get vertex
 		v = self.items[k]
@@ -82,7 +82,7 @@ class vGraph:
 	def bfs(self, k):
 		# BFS search vertex in graph
 		if not self.items.get(k):
-			print("Vertex " + k + " not exist!")
+			#print("Vertex " + k + " not exist!")
 			return
 		# get vertex
 		queue = []
@@ -152,5 +152,12 @@ class vGraph:
 		for k in keys:
 			# get diction's data element
 			v = self.items[k]
-			s += str(v)
+			s += str(v)+"\n"
 		return s
+		
+	def show(self):
+		keys = self.items.keys()
+		for k in keys:
+			# get diction's data element
+			self.items[k].show()
+		return

@@ -57,6 +57,7 @@ g.add("INPUT_4")
 print("==== Original graph ====")
 print(g)
 
+g.show()
 
 
 print("==== Do DFS search path from OUTPUT_x ====")

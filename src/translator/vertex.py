@@ -19,7 +19,7 @@ class Vertex:
 
 	def getname(self):
 		return self.name
-		
+
 	def addneighbor(self, v, e):
 		# verify if this node already in list? only put egde in vertex
 		for n in self.neighbor:
@@ -31,29 +31,38 @@ class Vertex:
 		n.setnb(v, e)
 		self.neighbor.append(n)
 		return
-	
+
 	def delneighbor(self, v):
 		for n in self.neighbor:
 			if n.getvertex()==v:
 				self.neighbor.pop(self.neighbor.index(n))
 		return
-	
+
 	def getneighbor(self):
 		return self.neighbor
-		
+
 	def isneighbor(self, v):
 		for n in self.neighbor:
 			if n.getvertex() == v:
 				return True
 		return False
-		
+
 	def setcolor(self, c):
 		self.color = c
-	
+
 	def getcolor(self):
 		return self.color
-		
+
 	def __repr__(self):
+		s = self.name + " : "
+		if not self.neighbor:
+			s += "(None)"
+		else:
+			for i in self.neighbor:
+				s += str(i)+ ","
+		return s+"\n"
+
+	def show(self):
 		s=""
 		s0 = "[" + self.name + "], color=" + str(self.color) +","
 		for i in self.neighbor:
@@ -62,7 +71,8 @@ class Vertex:
 			n=0
 			for e in i.getedge():
 				# print list use '", ".join(e)'
-				s2 += "   path " + str(n) +":\"" + ", ".join(e) + "\"\n"
+				s2 += "   path " + str(n) +":\"" + str(e) + "\"\n"
 				n+=1
-			s += s0 + s1 + s2 	
-		return s + "\n"
+			s += s0 + s1 + s2
+		print(s + "\n")
+		return

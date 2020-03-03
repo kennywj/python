@@ -1,4 +1,4 @@
-from __future__ import print_function
+rom __future__ import print_function
 import re
 import time
 from datetime import timedelta
@@ -75,18 +75,17 @@ vg = vgraph.vGraph()
 g = gen_egraph(sys.argv[1])
 if g:
 	#print(g)
+
 	g.clear()
-	'''
 	start_time = time.time()
 	t = timer.RepeatTimer(1, show_progress, [g, start_time])
 	# start timer
 	t.start()
-	g.dfs("OUTPUT_0",process, vg)
+	g.dfs("OUTPUT_6_0",process, vg)
 	# stop timer
 	t.cancel()
-	
 	print(vg)
-	'''
+
 else:
 	print("cannot create graph, exit")
 
