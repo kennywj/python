@@ -21,13 +21,12 @@ class Vertex:
 		return self.name
 		
 	def addneighbor(self, v, e):
-		# verify if this node & edges already in list?
+		# verify if this node already in list? only put egde in vertex
 		for n in self.neighbor:
-			if n.issame(v,e):
-				#print("Vertex " + v +", edge " + e + " exist");
+			if n.issame(v):
+				n.setedge(e)
 				return
 		# add the new neighbor
-		#print("add neighbor" + v +"," + e)
 		n = neighbor.Neighbor()
 		n.setnb(v, e)
 		self.neighbor.append(n)
@@ -55,8 +54,15 @@ class Vertex:
 		return self.color
 		
 	def __repr__(self):
-		s = "[" + self.name + "], color = " + str(self.color) + "\n"
+		s=""
+		s0 = "[" + self.name + "], color=" + str(self.color) +","
 		for i in self.neighbor:
-			s += "   +--"+ i.getedge() + "->[" + i.getvertex() +"]\n"
-		s+="\n"
-		return s
+			s1 = "connect to [" + i.getvertex() +"] via \n"
+			s2 = ""
+			n=0
+			for e in i.getedge():
+				# print list use '", ".join(e)'
+				s2 += "   path " + str(n) +":\"" + ", ".join(e) + "\"\n"
+				n+=1
+			s += s0 + s1 + s2 	
+		return s + "\n"

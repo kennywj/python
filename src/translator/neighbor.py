@@ -7,12 +7,12 @@ from __future__ import print_function
 class Neighbor:
 	def __init__(self):
 		self.vertex =""
-		self.edge = ""
+		self.edge = [] # edge is a list of strings
 		return
 
 	def setnb(self, v, e):
 		self.vertex = v
-		self.edge = e 
+		self.edge.append(e)
 		return
 
 	def getnb(self):
@@ -24,42 +24,18 @@ class Neighbor:
 	
 	def getvertex(self):
 		return self.vertex
+	
+	def setedge(self, e):
+		if e not in self.edge:
+			self.edge.append(e)
 		
 	def getedge(self):
 		return self.edge
 	
-	def issame(self, v, e):
-		return self.vertex == v and self.edge == e
+	def issame(self, v):
+		return self.vertex == v
 	
 	def __repr__(self):
-		return "(" + self.vertex + "," + self.edge + ")"
+		s = "(" + self.vertex + ":" + ", ".join(self.edge) + ")"
+		return s
 
-#
-# unit test
-# Test cases create a list of neighbor vertex , then display it by its method
-#
-'''
-n = Neighbor()
-n.setnb("node","edge")
-
-print(n.issame("node","edge"))
-
-print(n.issame("1","2"))
-	
-l = []
-i = 0
-while i<10:
-	n = Neighbor()
-	n.setnb("node" + str(i),"edge1"+ str(i))
-	i+=1
-	l.append(n)
-print(l)	
-
-print(l[0].getnb())
-
-l[0].setnb("test","etest")
-
-print(l[0].getnb())
-
-print(l[0])
-'''

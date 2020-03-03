@@ -61,10 +61,10 @@ print(g)
 
 print("==== Do DFS search path from OUTPUT_x ====")
 g.cleartrace()
-g.dfs("OUTPUT_0")
+g.dfs("OUTPUT_0",None,None)
 print(g.gettrace())
 g.cleartrace()
-g.dfs("OUTPUT_1")
+g.dfs("OUTPUT_1", None, None)
 print(g.gettrace())
 
 
@@ -99,23 +99,23 @@ print(ig.gettrace())
 
 print("==== DFS graph search ====")
 g.cleartrace()
-ig.dfs("INPUT_0")
+ig.dfs("INPUT_0", None, None)
 print(g.gettrace())
 
 g.cleartrace()
-ig.dfs("INPUT_1")
+ig.dfs("INPUT_1", None, None)
 print(g.gettrace())
 
 g.cleartrace()
-ig.dfs("INPUT_2")
+ig.dfs("INPUT_2", None, None)
 print(g.gettrace())
 
 g.cleartrace()
-ig.dfs("INPUT_3")
+ig.dfs("INPUT_3", None, None)
 print(g.gettrace())
 
 g.cleartrace()
-ig.dfs("INPUT_4")
+ig.dfs("INPUT_4", None, None)
 print(g.gettrace())
 
 #
