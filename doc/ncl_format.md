@@ -93,3 +93,7 @@ case 11:
 	acknet33=TH44(acknet16,acknet19,acknet14,acknet17)
 	f_constnet0=AND2(acknet0,bufnet_0)
 	bufnet_1=INV4X(ackin)
+	
+做netlist NCL format 轉換，input, output, drlatr, drlatn 加上所在行號，以利後續追蹤對照
+
+

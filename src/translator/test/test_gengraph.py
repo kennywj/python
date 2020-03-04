@@ -1,4 +1,4 @@
-rom __future__ import print_function
+from __future__ import print_function
 import re
 import time
 from datetime import timedelta
@@ -71,21 +71,51 @@ if len(sys.argv) <= 1:
 	sys.exit()
 
 
-vg = vgraph.vGraph()
+
 g = gen_egraph(sys.argv[1])
 if g:
 	#print(g)
-
+	#print("\n")
 	g.clear()
+	
+	print("\nWrite vertex graph into file")
+	fname = input("input filename:")
+	try:
+		ofd = open(fname, "w+")
+	except:
+		print ("Could not open write file \"" + fname + "\"")
+		sys.exit()
+		
+	vg = vgraph.vGraph()
 	start_time = time.time()
 	t = timer.RepeatTimer(1, show_progress, [g, start_time])
 	# start timer
 	t.start()
-	g.dfs("OUTPUT_6_0",process, vg)
+	keys = g.getkeys()
+	for k in keys:
+		if re.search("^OUTPUT_",k):
+			print("\nDFS search edge graph start from " + k)
+			g.dfs(k, process, vg)
+			#print(vg)
 	# stop timer
 	t.cancel()
-	print(vg)
+	print("\n")
+	# show vertex graph
+	vg.show(ofd)
+	try:
+		ofd.close
+	except:
+		pass
 
+	#	
+	# list search path
+	#
+	keys = vg.getkeys()
+	for k in keys:
+		if re.search("^OUTPUT_",k):
+			print("\nDFS search vertex graph start from " + k)
+			vg.dfs(k, None, None)
+			
 else:
 	print("cannot create graph, exit")
 

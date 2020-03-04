@@ -1,4 +1,5 @@
 import sys
+import re
 sys.path.append('../')
 import vgraph
 #
@@ -53,13 +54,26 @@ g.add("INPUT_3")
 g.add("INPUT_4")
 
 
-
+'''
 print("==== Original graph ====")
 print(g)
 
-g.show()
+print("Write vertex graph into file")
+fname = input("input filename:")
+try:
+	ofd = open(fname, "w+")
+except:
+		print ("Could not open write file \"" + fname + "\"")
+		sys.exit()
+# write graph into file		
+g.show(ofd)
 
-
+try:
+	ofd.close
+except:
+	pass
+'''	
+'''
 print("==== Do DFS search path from OUTPUT_x ====")
 g.cleartrace()
 g.dfs("OUTPUT_0",None,None)
@@ -67,14 +81,14 @@ print(g.gettrace())
 g.cleartrace()
 g.dfs("OUTPUT_1", None, None)
 print(g.gettrace())
+'''
 
-
-
+'''
 print("==== Invert graph ====")
 ig = g.invert()
 print(ig)
-
-
+'''
+'''
 print("==== BFS graph search ====")
 ig.cleartrace()
 ig.bfs("INPUT_0")
@@ -95,9 +109,9 @@ print(ig.gettrace())
 ig.cleartrace()
 ig.bfs("INPUT_4")
 print(ig.gettrace())
+'''
 
-
-
+'''
 print("==== DFS graph search ====")
 g.cleartrace()
 ig.dfs("INPUT_0", None, None)
@@ -118,7 +132,7 @@ print(g.gettrace())
 g.cleartrace()
 ig.dfs("INPUT_4", None, None)
 print(g.gettrace())
-
+'''
 #
 # test case:  do DFS search graph and show result
 #
@@ -141,16 +155,11 @@ def show_trace(l):
 #	
 # Search keys to find initial point (INPUT_XXX) or (OUTPUT_XXX) X is number 0-9
 #
-'''
+
 keys = g.getkeys()
 for k in keys:
-	if re.search("^OUTPUT_[0-9]",k) or \
-		re.search("^INPUT_[0-9]",k):
-		# do DFS
-		g.dfs(k)
-		show_trace(g.gettrace())
-		g.cleartrace()
-'''
+	if re.search("^OUTPUT_[0-9]",k):
+		g.dfs(k, None, None)
 #
 # test case:  invert graph, i.e. change initial point from OUTPUT_[0-9] to INPUT_[0-9]
 #

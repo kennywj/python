@@ -62,7 +62,7 @@ class Vertex:
 				s += str(i)+ ","
 		return s+"\n"
 
-	def show(self):
+	def show(self, fd):
 		s=""
 		s0 = "[" + self.name + "], color=" + str(self.color) +","
 		for i in self.neighbor:
@@ -74,5 +74,10 @@ class Vertex:
 				s2 += "   path " + str(n) +":\"" + str(e) + "\"\n"
 				n+=1
 			s += s0 + s1 + s2
-		print(s + "\n")
+		s+="\n"
+		
+		if fd:
+			fd.write(s)
+		else:
+			print(s)
 		return

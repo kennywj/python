@@ -2,6 +2,7 @@
 # dft_trace, generate edge graph, then remove none latch nodes and translate to vertex graph
 # then do DFS search from OUTPUT to INPUT to list all latch nodes
 #
+import re
 import time
 from datetime import timedelta
 import sys
@@ -12,39 +13,18 @@ from gengraph import gen_egraph
 from gengraph import process
 import timer
 
-def show_trace(l):	
-	id=0
-	for i in l:
-		n = l.pop()
-		id+=1
-		print("Path [" + str(id) +"] :")
-		while(len(n)):
-			v = n.pop()
-			if re.search("^OUTPUT_[0-9]",v) or \
-				re.search("^INPUT_[0-9]",v):
-				pass
-			else:
-				print(v,end="")
-				if len(n)>1:
-					print("->",end="")
-		print("\n")
-		
+id = 0
 def write_trace(ofd, l):	
-	id=0
-	for i in l:
-		n = l.pop()
-		id += 1
-		ofd.write("Path [" + str(id) +"] :")
-		while(len(n)):
-			v = n.pop()
-			if re.search("^OUTPUT_[0-9]",v) or \
-				re.search("^INPUT_[0-9]",v):
-				pass
-			else:
-				ofd.write(v)
-				if len(n)>1:
-					ofd.write("->")
-		ofd.write("\n")
+	global id
+	ofd.write("Path [" + str(id) +"] :")
+	while(l):
+		v = l.pop(0)
+		ofd.write(v)
+		if len(l)>0:
+			ofd.write("->")
+	ofd.write("\n")
+	id +=1
+	return
 		
 		
 def show_progress(g, start_time):
@@ -68,39 +48,53 @@ def main():
 		g.clear()
 	
 	start_time = time.time()
-	t = timer.RepeatTimer(1, show_progress, [g, start_time])
+	t = timer.RepeatTimer(0.5, show_progress, [g, start_time])
 	# start timer
 	t.start()
 	vg = vgraph.vGraph()
-	# DFS OUTPUT_0 path, put in vg
-	g.dfs("OUTPUT_0",process, vg)
+	keys = g.getkeys()
+	for k in keys:
+		if re.search("^OUTPUT_",k):
+			print("\nDFS search start from " + k)
+			g.dfs(k, process, vg)
 	
-	print(vg)
+	#print(vg)
 	# stop timer
 	t.cancel()
-	'''
-	# try to open write file
-	try:
-		ofd = open(sys.argv[2], "w+")
-	except:
-		pass
-		
-	print(g)
-	# trace 1 OUTPUT line for test
-	g.dfs("OUTPUT_0", None)
-	# try to write data into file
-	try:
-		write_trace(ofd, l)
-	except:
-		pass
-		
-	g.cleartrace()
 	
+	print("\nWrite vertex graph into file")
+	fname = input("input filename:")
 	try:
-		ofd.close()
+		ofd = open(fname, "w+")
+	except:
+		print ("Could not open write file \"" + fname + "\"")
+		sys.exit()
+	
+	# show vertex graph
+	vg.show(ofd)
+	try:
+		ofd.close
 	except:
 		pass
-	'''
+	
+	print("\nWrite vertex trace into file")
+	fname = input("input filename:")
+	try:
+		ofd = open(fname, "w+")
+	except:
+		print ("Could not open write file \"" + fname + "\"")
+		sys.exit()
+	
+	# show each paths in vertex graph
+	keys = vg.getkeys()
+	for k in keys:
+		if re.search("^OUTPUT_",k):
+			print("\nDFS search vertex graph start from " + k)
+			vg.dfs(k, write_trace, ofd)
+	try:
+		ofd.close
+	except:
+		pass
 #
 # end main progam
 #

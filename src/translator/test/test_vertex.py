@@ -21,7 +21,7 @@ v.addneighbor("N3","e3")
 v.addneighbor("N3","e13")
 print(v)
 
-v.show()
+v.show(None)
 
 print("Is N1 neighbor? " + str(v.isneighbor("N1")))
 v.delneighbor("N1")

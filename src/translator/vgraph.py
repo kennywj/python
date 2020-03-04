@@ -5,16 +5,16 @@ import re
 
 #
 # vGraph class is vertex name(key) and vertex class (data) pair dictionary
-#	 k is vertex, d is a list of node which node is (vertex, edge) pair
-# 		for example: [v0] - e1 - [v1] (v0 connect to V1 via edge e1)
-#					 [v0] - e2 - [v2] (v0 connect to v2 via edge e2) 
-#					 [v1] - e3 - [v2] (v1 connect to v2 via edge e3)
-#					 [v2] - e4 - [v3] (v2 connect to v3 via edge e4)
+#	 k is vertex, d is a list of nodes which is (vertex, [edge list]) pair
+# 		for example:  [v0] - e1 - [v1] (v0 connect to V1 via edge e1)
+#					    [v0] - e2 - [v1] (v0 connect to v1 via edge e2) 
+#					    [v1] - e3 - [v2] (v1 connect to v2 via edge e3)
+#					    [v2] - e4 - [v3] (v2 connect to v3 via edge e4)
 #		then then vertex graph should as below
 #		vertex_graph = {
-#			v0 : [[v1,e1], [v2,e2]]
-#			v1 : [[v2,e3]]
-#			v2 : [[v3,e4]]
+#			v0 : [[v1,[e1]], [v2,[e2]]
+#			v1 : [[v2,[e3]]
+#			v2 : [[v3,[e4]]
 #		}
 #
 def show(n, l):
@@ -22,7 +22,7 @@ def show(n, l):
 	return
 	
 class vGraph:
-	# graph is a dictionary, key is in/out edge, data is vetex, color and out/in edge
+	# graph is a dictionary, key is in/out edge, data is vertex, color and out/in edge
 	def __init__(self):
 		self.items={}
 		self.path=stack.Stack()
@@ -155,9 +155,9 @@ class vGraph:
 			s += str(v)+"\n"
 		return s
 		
-	def show(self):
+	def show(self, fd):
 		keys = self.items.keys()
 		for k in keys:
 			# get diction's data element
-			self.items[k].show()
+			self.items[k].show(fd)
 		return

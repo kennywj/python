@@ -96,6 +96,7 @@ def gen_egraph(file):
 	
 #
 # handle the egraph dfs result. put in vgraph
+# each start vertex is OUTPUT_XXX
 #	
 def process(vg, l):
 	e=""		# edges string
