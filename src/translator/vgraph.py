@@ -130,7 +130,8 @@ class vGraph:
 				if name not in g.items.keys():
 					g.add(name)
 				v = g.getvertex(name)
-				v.addneighbor(k,i.getedge())
+				for e in i.getedge():
+					v.addneighbor(k,e)
 		return g
 
 	def gettrace(self):

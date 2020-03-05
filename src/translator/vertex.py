@@ -63,17 +63,16 @@ class Vertex:
 		return s+"\n"
 
 	def show(self, fd):
-		s=""
-		s0 = "[" + self.name + "], color=" + str(self.color) +","
+		s = "[" + self.name + "], color=" + str(self.color) +"\n"
 		for i in self.neighbor:
-			s1 = "connect to [" + i.getvertex() +"] via \n"
+			s1 = "  => [" + i.getvertex() +"]\n"
 			s2 = ""
 			n=0
 			for e in i.getedge():
 				# print list use '", ".join(e)'
-				s2 += "   path " + str(n) +":\"" + str(e) + "\"\n"
+				s2 += "        path " + str(n) +":\"" + str(e) + "\"\n"
 				n+=1
-			s += s0 + s1 + s2
+			s += s1 + s2
 		s+="\n"
 		
 		if fd:

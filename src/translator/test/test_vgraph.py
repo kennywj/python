@@ -54,10 +54,12 @@ g.add("INPUT_3")
 g.add("INPUT_4")
 
 
-'''
-print("==== Original graph ====")
-print(g)
 
+print("==== Original graph ====")
+#print(g)
+g.show(None)
+
+'''
 print("Write vertex graph into file")
 fname = input("input filename:")
 try:
@@ -83,11 +85,12 @@ g.dfs("OUTPUT_1", None, None)
 print(g.gettrace())
 '''
 
-'''
+
 print("==== Invert graph ====")
 ig = g.invert()
-print(ig)
-'''
+ig.show(None)
+#print(ig)
+
 '''
 print("==== BFS graph search ====")
 ig.cleartrace()

@@ -81,7 +81,15 @@ if g:
 	print("\nWrite vertex graph into file")
 	fname = input("input filename:")
 	try:
-		ofd = open(fname, "w+")
+		ofd0 = open(fname, "w+")
+	except:
+		print ("Could not open write file \"" + fname + "\"")
+		sys.exit()
+	
+	print("\nWrite invert vertex graph into file")
+	fname = input("input filename:")
+	try:
+		ofd1 = open(fname, "w+")
 	except:
 		print ("Could not open write file \"" + fname + "\"")
 		sys.exit()
@@ -100,22 +108,34 @@ if g:
 	# stop timer
 	t.cancel()
 	print("\n")
+	
 	# show vertex graph
-	vg.show(ofd)
+	vg.show(ofd0)
+	
+	# invert vgraph
+	ivg = vg.invert()
+	
+	# show invert vertex graph
+	ivg.show(ofd1)
 	try:
-		ofd.close
+		ofd0.close
 	except:
 		pass
-
+		
+	try:
+		ofd1.close
+	except:
+		pass
 	#	
 	# list search path
 	#
+	'''
 	keys = vg.getkeys()
 	for k in keys:
 		if re.search("^OUTPUT_",k):
 			print("\nDFS search vertex graph start from " + k)
 			vg.dfs(k, None, None)
-			
+	'''		
 else:
 	print("cannot create graph, exit")
 

@@ -40,6 +40,7 @@ def main():
 	if len(sys.argv) <= 1:
 		print ("dft_trace.py <inputfile> [<outputfile>]")
 		sys.exit()
+	# generate edge graph
 	g = gen_egraph(sys.argv[1])
 	if not g:
 		print("cannot create graph, exit")
@@ -47,6 +48,13 @@ def main():
 	else:
 		g.clear()
 	
+	print("\nWrite vertex graph into file")
+	vgraph_fname = input("input filename:")
+	
+	print("\nWrite vertex trace into file")
+	trace_fname = input("input filename:")
+	
+	# Do DFS of edge graph to generate Vertex graph
 	start_time = time.time()
 	t = timer.RepeatTimer(0.5, show_progress, [g, start_time])
 	# start timer
@@ -62,10 +70,9 @@ def main():
 	# stop timer
 	t.cancel()
 	
-	print("\nWrite vertex graph into file")
-	fname = input("input filename:")
+	# display invert vertex graph
 	try:
-		ofd = open(fname, "w+")
+		ofd = open(vgraph_fname, "w+")
 	except:
 		print ("Could not open write file \"" + fname + "\"")
 		sys.exit()
@@ -77,10 +84,9 @@ def main():
 	except:
 		pass
 	
-	print("\nWrite vertex trace into file")
-	fname = input("input filename:")
+	# trace invert vertex graph
 	try:
-		ofd = open(fname, "w+")
+		ofd = open(trace_fname, "w+")
 	except:
 		print ("Could not open write file \"" + fname + "\"")
 		sys.exit()
@@ -89,7 +95,7 @@ def main():
 	keys = vg.getkeys()
 	for k in keys:
 		if re.search("^OUTPUT_",k):
-			print("\nDFS search vertex graph start from " + k)
+			#print("\nDFS search vertex graph start from " + k)
 			vg.dfs(k, write_trace, ofd)
 	try:
 		ofd.close
