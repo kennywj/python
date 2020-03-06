@@ -9,7 +9,7 @@ import neighbor
 class Vertex:
 	def __init__(self):
 		self.name = ""
-		self.color=0
+		self.color= ""
 		self.neighbor=[]
 		return
 
@@ -63,7 +63,7 @@ class Vertex:
 		return s+"\n"
 
 	def show(self, fd):
-		s = "[" + self.name + "], color=" + str(self.color) +"\n"
+		s = "[" + self.name + "], color=" + self.color +"\n"
 		for i in self.neighbor:
 			s1 = "  => [" + i.getvertex() +"]\n"
 			s2 = ""

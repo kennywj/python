@@ -17,8 +17,11 @@ import re
 #			v2 : [[v3,[e4]]
 #		}
 #
-def show(n, l):
-	print(l)
+def show(g, l):
+	for i in l:
+		v = g.getvertex(i)
+		print(v.getname() + "(" +v.getcolor()+") ", end="")
+	print("\n")	
 	return
 	
 class vGraph:
@@ -79,38 +82,50 @@ class vGraph:
 		self.path.pop()
 		return
 
-	def bfs(self, k):
+	def bfs(self, k, func, arg):
 		# BFS search vertex in graph
 		if not self.items.get(k):
 			#print("Vertex " + k + " not exist!")
 			return
 		# get vertex
-		queue = []
+		color=["W","G"]
+		qu = []
 		visited = []
 		self.trace.clear()
-		
+		id = 0		# index of color 0/1
 		vertex = self.items[k]
 		visited.append(vertex)
-		queue.append(vertex.getname())
-		while(queue):
+		vertex.setcolor(color[id])		
+		qu.append(vertex.getname())
+		while(qu):
 			# get first vertex
-			vname = queue.pop(0)
+			vname = qu.pop(0)
 			self.trace.append(vname)
 			# get data in dictionary by vertex name
 			vertex = self.items[vname]
 			# get neighbor list
 			n = vertex.getneighbor()
+			id = (id + 1)%2
 			if not n:
 				# it is end vertex if without neighbor
-				pass
+				show(self, self.trace)
+				self.trace.clear()
+				#pass
 			else:
 				# sequencial put neighbor which does not visited into queue
 				for i in n:
 					vname = i.getvertex()
 					v = self.items[vname]
 					if vname not in visited:
-						queue.append(vname)
+						qu.append(vname)
+						if not v.getcolor():
+							v.setcolor(color[id])
+						elif v.getcolor()==color[id]:
+							pass
+						else:
+							print("warning: set " + color[id] +" to " + vname + " but its color was set "+ v.getcolor() )
 						visited.append(vname)
+					
 		return
 
 	def invert(self):

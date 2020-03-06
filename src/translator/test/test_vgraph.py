@@ -6,7 +6,7 @@ import vgraph
 # unit test
 # test case: initial test vertex graph and add vertex
 # show graph
-#
+#	addneighbor rule: v.addneighbor("Y","X") input line number X from neighbor node Y
 
 g = vgraph.vGraph()
 
@@ -18,6 +18,10 @@ g.add("OUTPUT_1")
 v = g.getvertex("OUTPUT_1")
 v.addneighbor("N8","L14")
 
+g.add("N10")
+v = g.getvertex("N10")
+v.addneighbor("N5","L15")
+
 g.add("N9")
 v = g.getvertex("N9")
 v.addneighbor("N6","L11")
@@ -26,6 +30,7 @@ g.add("N8")
 v = g.getvertex("N8")
 v.addneighbor("N7","L10")
 v.addneighbor("N4","L7")
+v.addneighbor("N10","L16")
 
 g.add("N7")
 v = g.getvertex("N7")
@@ -54,11 +59,11 @@ g.add("INPUT_3")
 g.add("INPUT_4")
 
 
-
+'''
 print("==== Original graph ====")
 #print(g)
 g.show(None)
-
+'''
 '''
 print("Write vertex graph into file")
 fname = input("input filename:")
@@ -88,11 +93,21 @@ print(g.gettrace())
 
 print("==== Invert graph ====")
 ig = g.invert()
-ig.show(None)
-#print(ig)
+#ig.show(None)
+print(ig)
 
 '''
-print("==== BFS graph search ====")
+print("==== BFS search adn draw color ====")
+keys = g.getkeys()
+for k in keys:
+	if re.search("^INPUT_",k):
+		#ig.cleartrace()
+		ig.bfs(k, None, None)
+		#print(ig.gettrace())
+#ig.show(None)
+'''
+
+'''		
 ig.cleartrace()
 ig.bfs("INPUT_0")
 print(ig.gettrace())
@@ -114,8 +129,8 @@ ig.bfs("INPUT_4")
 print(ig.gettrace())
 '''
 
+
 '''
-print("==== DFS graph search ====")
 g.cleartrace()
 ig.dfs("INPUT_0", None, None)
 print(g.gettrace())
@@ -158,11 +173,12 @@ def show_trace(l):
 #	
 # Search keys to find initial point (INPUT_XXX) or (OUTPUT_XXX) X is number 0-9
 #
-
+'''
 keys = g.getkeys()
 for k in keys:
 	if re.search("^OUTPUT_[0-9]",k):
 		g.dfs(k, None, None)
+'''		
 #
 # test case:  invert graph, i.e. change initial point from OUTPUT_[0-9] to INPUT_[0-9]
 #
