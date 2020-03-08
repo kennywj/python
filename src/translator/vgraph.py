@@ -82,50 +82,66 @@ class vGraph:
 		self.path.pop()
 		return
 
-	def bfs(self, k, func, arg):
+	def bfs(self, keys, func, arg):
 		# BFS search vertex in graph
-		if not self.items.get(k):
-			#print("Vertex " + k + " not exist!")
-			return
-		# get vertex
-		color=["W","G"]
+		color=["white","gray","red"]
+		level = 0
 		qu = []
 		visited = []
+		children = []
 		self.trace.clear()
-		id = 0		# index of color 0/1
-		vertex = self.items[k]
-		visited.append(vertex)
-		vertex.setcolor(color[id])		
-		qu.append(vertex.getname())
-		while(qu):
+		# assume a virtual vertex which children are all match keys' vertexs
+		kl = list(self.items.keys())
+		while kl:
+			k = kl.pop(0)
+			if re.search(keys,k):
+				vertex = self.items[k]
+				visited.append(vertex)
+				vertex.setcolor(color[level])
+				qu.append(vertex.getname())
+		#print(qu)
+		
+		while(True):
 			# get first vertex
-			vname = qu.pop(0)
+			if qu:
+				vname = qu.pop(0)
+			else:
+				# end of all vertex in same level
+				self.trace.clear()
+				# put children into qu
+				qu = children.copy()
+				children.clear()
+				level = (level + 1)%3
+				if not qu:
+					break;	# no other vertex, exit loop
+				vname = qu.pop(0)
+				
 			self.trace.append(vname)
 			# get data in dictionary by vertex name
 			vertex = self.items[vname]
 			# get neighbor list
 			n = vertex.getneighbor()
-			id = (id + 1)%2
 			if not n:
-				# it is end vertex if without neighbor
-				show(self, self.trace)
-				self.trace.clear()
-				#pass
+				pass
 			else:
-				# sequencial put neighbor which does not visited into queue
+				# check all neighbor has been set color?
+				
 				for i in n:
 					vname = i.getvertex()
 					v = self.items[vname]
-					if vname not in visited:
-						qu.append(vname)
-						if not v.getcolor():
-							v.setcolor(color[id])
-						elif v.getcolor()==color[id]:
-							pass
-						else:
-							print("warning: set " + color[id] +" to " + vname + " but its color was set "+ v.getcolor() )
-						visited.append(vname)
 					
+					if not v.getcolor():
+						v.setcolor(color[level])
+					elif v.getcolor()==color[level]:
+						pass
+					else:
+						print("Warning: " + vname + " try to set " + color[level] + \
+							" but it had set " +  v.getcolor())
+					
+					if vname not in visited:
+						#qu.append(vname)
+						children.append(vname)
+						visited.append(vname)
 		return
 
 	def invert(self):
@@ -148,7 +164,7 @@ class vGraph:
 				for e in i.getedge():
 					v.addneighbor(k,e)
 		return g
-
+		
 	def gettrace(self):
 		return self.trace
 
@@ -176,4 +192,26 @@ class vGraph:
 		for k in keys:
 			# get diction's data element
 			self.items[k].show(fd)
+		return
+	# clear all vertex's group
+	def cleargroup(self):
+		keys = self.items.keys()
+		for k in keys:
+			# get diction's data element
+			v = self.items[k]
+			v.setgroup(0)
+		return	
+	# show all vertex's group 	
+	def showgroup(self, num):
+		keys = self.items.keys()
+		n=0
+		for k in keys:
+			v = self.items[k]
+			if num and num != v.getgroup():
+				continue
+			print("%10s:%2d  " % (v.getname(),v.getgroup()), end="")
+			n+=1
+			if (n%4)==0:
+				print("\n")
+		print("\n")
 		return

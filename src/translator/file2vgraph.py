@@ -54,10 +54,11 @@ def main():
 	fd.close()
 	print("Translation file to Vertex graph Done.")
 	
-	if vg:
-		vg.show(None)
-		
-	
+	if not vg:
+		sys.exit()
+	# mark vertex same group
+	vg.bfs("INPUT_",None,None)
+	vg.show(None)
 	return
 #
 # end main progam

@@ -94,7 +94,9 @@ print(g.gettrace())
 print("==== Invert graph ====")
 ig = g.invert()
 #ig.show(None)
-print(ig)
+#print(ig)
+ig.bfs("^INPUT_", None, None)
+ig.show(None)
 
 '''
 print("==== BFS search adn draw color ====")

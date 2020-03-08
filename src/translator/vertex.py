@@ -10,6 +10,7 @@ class Vertex:
 	def __init__(self):
 		self.name = ""
 		self.color= ""
+		self.group = 0
 		self.neighbor=[]
 		return
 
@@ -52,7 +53,13 @@ class Vertex:
 
 	def getcolor(self):
 		return self.color
+	
+	def setgroup(self, n):
+		self.group = n
 
+	def getgroup(self):
+		return self.group
+		
 	def __repr__(self):
 		s = self.name + " : "
 		if not self.neighbor:
@@ -63,7 +70,7 @@ class Vertex:
 		return s+"\n"
 
 	def show(self, fd):
-		s = "[" + self.name + "], color=" + self.color +"\n"
+		s = "[" + self.name + "], color= " + self.color + ",group= "+ str(self.group) +"\n"
 		for i in self.neighbor:
 			s1 = "  => [" + i.getvertex() +"]\n"
 			s2 = ""
@@ -73,8 +80,6 @@ class Vertex:
 				s2 += "        path " + str(n) +":\"" + str(e) + "\"\n"
 				n+=1
 			s += s1 + s2
-		s+="\n"
-		
 		if fd:
 			fd.write(s)
 		else:

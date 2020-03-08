@@ -51,8 +51,8 @@ def main():
 	print("\nWrite vertex graph into file")
 	vgraph_fname = input("input filename:")
 	
-	print("\nWrite vertex trace into file")
-	trace_fname = input("input filename:")
+	print("\nWrite invert vertex into file")
+	invert_vgraph_fname = input("input filename:")
 	
 	# Do DFS of edge graph to generate Vertex graph
 	start_time = time.time()
@@ -66,7 +66,6 @@ def main():
 			print("\nDFS search start from " + k)
 			g.dfs(k, process, vg)
 	
-	#print(vg)
 	# stop timer
 	t.cancel()
 	
@@ -76,8 +75,7 @@ def main():
 	except:
 		print ("Could not open write file \"" + fname + "\"")
 		sys.exit()
-	
-	# show vertex graph
+	# show vertex graph (write to file)
 	vg.show(ofd)
 	try:
 		ofd.close
@@ -86,17 +84,15 @@ def main():
 	
 	# trace invert vertex graph
 	try:
-		ofd = open(trace_fname, "w+")
+		ofd = open(invert_vgraph_fname, "w+")
 	except:
 		print ("Could not open write file \"" + fname + "\"")
 		sys.exit()
-	
-	# show each paths in vertex graph
-	keys = vg.getkeys()
-	for k in keys:
-		if re.search("^OUTPUT_",k):
-			#print("\nDFS search vertex graph start from " + k)
-			vg.dfs(k, write_trace, ofd)
+		
+	# invert vertex graph
+	ivg = vg.invert()
+	# show vertex graph (write to file)
+	ivg.show(ofd)
 	try:
 		ofd.close
 	except:
