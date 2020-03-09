@@ -2,7 +2,13 @@ import re
 import sys
 sys.path.append('../')
 import vgraph
-
+#
+# file2vgraph.py
+#
+#	convert vgraph file into vgraph object (python dictionary) in memory.
+#	Usage:
+#		$python3 file2vgraph.py <vgraph file>
+#
 def trans_vgraph(fd):
 	vg = vgraph.vGraph()
 	neighbor=""

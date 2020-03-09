@@ -78,7 +78,7 @@ class vGraph:
 		else:
 			#for each neighbor in neighbor list, do DFS
 			for i in n:
-				self.dfs(i.getvertex(), func, arg)
+				self.dfs(i.getname(), func, arg)
 		self.path.pop()
 		return
 
@@ -125,9 +125,8 @@ class vGraph:
 				pass
 			else:
 				# check all neighbor has been set color?
-				
 				for i in n:
-					vname = i.getvertex()
+					vname = i.getname()
 					v = self.items[vname]
 					
 					if not v.getcolor():
@@ -156,7 +155,7 @@ class vGraph:
 				g.add(name)
 			n = vertex.neighbor
 			for i in n:
-				name = i.getvertex()
+				name = i.getname()
 				# in node not in new graph, add it
 				if name not in g.items.keys():
 					g.add(name)

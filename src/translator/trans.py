@@ -7,6 +7,13 @@
 from __future__ import print_function
 import re
 import sys
+#
+# trans.py
+#
+#	convert ncl netlist file into internal presentation format for further process.
+#	Usage:
+#		$python3 trans.py <ncl netlist file> < output file>
+#
 
 #Data line number used for calculation processing
 ln=0

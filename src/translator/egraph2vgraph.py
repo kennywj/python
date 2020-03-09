@@ -13,20 +13,16 @@ from gengraph import gen_egraph
 from gengraph import process
 import timer
 
-id = 0
-def write_trace(ofd, l):	
-	global id
-	ofd.write("Path [" + str(id) +"] :")
-	while(l):
-		v = l.pop(0)
-		ofd.write(v)
-		if len(l)>0:
-			ofd.write("->")
-	ofd.write("\n")
-	id +=1
-	return
-		
-		
+#
+# egraph2vgraph.py
+#
+#	To convert edge graph file into vertex graph object (python dictionary) and then write to file.
+#  The edge graph file from NCL netlist file converted by trans.py 
+#
+#	Usage:
+#		$python3 egraph2vgraph.py <vgraph file>
+#
+
 def show_progress(g, start_time):
 	count = g.getcount()
 	elapsed_time = time.time() - start_time
@@ -38,7 +34,7 @@ def show_progress(g, start_time):
 def main():
 	# try to open read file
 	if len(sys.argv) <= 1:
-		print ("dft_trace.py <inputfile> [<outputfile>]")
+		print ("egraph2vgraph.py <inputfile>")
 		sys.exit()
 	# generate edge graph
 	g = gen_egraph(sys.argv[1])

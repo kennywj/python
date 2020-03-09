@@ -13,6 +13,7 @@ n.setnb("node","edge2")
 
 print(n)
 
+print("vertex's name " + n.getname())
 
 print(n.issame("node"))
 print(n.issame("node1"))

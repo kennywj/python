@@ -22,12 +22,12 @@ class Vertex:
 		return self.name
 
 	def addneighbor(self, v, e):
-		# verify if this node already in list? only put egde in vertex
+		# verify if this node already in list? if yes, only put its edge in vertex edge list
 		for n in self.neighbor:
 			if n.issame(v):
 				n.setedge(e)
 				return
-		# add the new neighbor
+		# add the new neighbor and its edge
 		n = neighbor.Neighbor()
 		n.setnb(v, e)
 		self.neighbor.append(n)
@@ -35,7 +35,7 @@ class Vertex:
 
 	def delneighbor(self, v):
 		for n in self.neighbor:
-			if n.getvertex()==v:
+			if n.getname()==v:
 				self.neighbor.pop(self.neighbor.index(n))
 		return
 
@@ -44,7 +44,7 @@ class Vertex:
 
 	def isneighbor(self, v):
 		for n in self.neighbor:
-			if n.getvertex() == v:
+			if n.getname() == v:
 				return True
 		return False
 
@@ -70,9 +70,9 @@ class Vertex:
 		return s+"\n"
 
 	def show(self, fd):
-		s = "[" + self.name + "], color= " + self.color + ",group= "+ str(self.group) +"\n"
+		s = "[" + self.name + "], color= " + str(self.color) + ",group= "+ str(self.group) +"\n"
 		for i in self.neighbor:
-			s1 = "  => [" + i.getvertex() +"]\n"
+			s1 = "  => [" + i.getname() +"]\n"
 			s2 = ""
 			n=0
 			for e in i.getedge():

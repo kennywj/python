@@ -22,7 +22,7 @@ class Neighbor:
 		n.append(self.edge)
 		return n
 
-	def getvertex(self):
+	def getname(self):
 		return self.vertex
 
 	def setedge(self, e):
