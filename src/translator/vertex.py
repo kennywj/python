@@ -11,6 +11,7 @@ class Vertex:
 		self.name = ""
 		self.color= ""
 		self.group = 0
+		self.ib = False
 		self.neighbor=[]
 		return
 
@@ -48,20 +49,39 @@ class Vertex:
 				return True
 		return False
 
+	# set color string
 	def setcolor(self, c):
 		self.color = c
 
 	def getcolor(self):
 		return self.color
-	
+
+	# set group number
 	def setgroup(self, n):
 		self.group = n
 
 	def getgroup(self):
 		return self.group
+
+	# set PO
+	def setib(self, b):
+		self.ib = b
+
+	def getib(self):
+		return self.ib
+
+	def clear(self):
+		self.color= ""
+		self.group = 0
+		self.ib = False
+		return
 		
 	def __repr__(self):
-		s = self.name + " : "
+		s = self.name
+		if self.ib:
+			s += "(IB):"
+		else:
+			s += "    :"
 		if not self.neighbor:
 			s += "(None)"
 		else:
@@ -70,7 +90,11 @@ class Vertex:
 		return s+"\n"
 
 	def show(self, fd):
-		s = "[" + self.name + "], color= " + str(self.color) + ",group= "+ str(self.group) +"\n"
+		s = "[" + self.name + "], color= " + str(self.color) + ",group= "+ str(self.group)
+		if self.ib:
+			s += " IB\n"
+		else:
+			s +="\n"
 		for i in self.neighbor:
 			s1 = "  => [" + i.getname() +"]\n"
 			s2 = ""

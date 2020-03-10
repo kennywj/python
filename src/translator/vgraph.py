@@ -17,11 +17,22 @@ import re
 #			v2 : [[v3,[e4]]
 #		}
 #
-def show(g, l):
-	for i in l:
-		v = g.getvertex(i)
-		print(v.getname() + "(" +v.getcolor()+") ", end="")
-	print("\n")	
+def show(g, l, msg):
+	i=0
+	s=""
+	while i < len(l):
+		v = g.getvertex(l[i])
+		s += v.getname()
+		if v.getib():
+			s += "(IB)"
+		if v.getcolor():
+			s += "(" +v.getcolor() +") "
+		i += 1
+		if i < len(l):
+			s += "=>"
+	if msg:
+		s += msg
+	print(s)	
 	return
 	
 class vGraph:
@@ -31,6 +42,7 @@ class vGraph:
 		self.path=stack.Stack()
 		self.trace=[]
 		self.count=0
+		self.do_cyclic_check = False
 		return
 
 	def add(self, k):
@@ -53,6 +65,8 @@ class vGraph:
 	def getvertex(self, k):
 		return self.items[k]
 
+	# Do DFS trace the vertex graph, mark IB if vertex in end node of loop or
+	# mark first vertex if the path does not contain loop
 	def dfs(self, k, func, arg):
 		# BFS search vertex in graph
 		if not self.items.get(k):
@@ -68,20 +82,60 @@ class vGraph:
 			# neighbor is null, show path
 			# get path lists
 			l = self.path.get().copy()
-			#self.trace.append(l)
+			# set IB to first visit vertex in path
+			v = self.items[l[0]]
+			v.setib(True)
 			self.count += 1
 			if func!=None:
 				func(arg, l)
 			else:
-				show(None, l)
-			#print(self.path)
+				show(self, l, None)
 		else:
 			#for each neighbor in neighbor list, do DFS
 			for i in n:
-				self.dfs(i.getname(), func, arg)
+				vname = i.getname()
+				l = self.path.get()
+				# detect loop
+				if vname in l:
+					v = self.items[vname]
+					v.setib(True)
+					self.count += 1
+					l = l.copy()
+					if func!=None:
+						func(arg, l)
+					else:
+						show(self, l, "=>loop to " + vname)
+				else:
+					self.dfs(vname, func, arg)
 		self.path.pop()
 		return
-
+	
+	# To use DFS checks the vertex graph 	
+	def cyclic_check(self, iv):
+		# do cyclic check
+		kl = list(self.items.keys())
+		while kl:
+			k = kl.pop(0)
+			if re.search(iv,k):
+				self.dfs(k, None, None)
+		self.do_cyclic_check = True
+		return
+		
+	def iscyclic(self):
+		# the function should do DFS first
+		if not self.do_cyclic_check:
+			print("Warning: it should do cyclic_check first\n");
+			return False
+		kl = list(self.items.keys())
+		while kl:
+			k = kl.pop(0)
+			if re.search("OUTPUT",k):
+				continue
+			v = self.items[k]
+			if v.getib():
+				return v.getib()
+		return False
+		
 	def bfs(self, keys, func, arg):
 		# BFS search vertex in graph
 		color=["white","gray","red"]
@@ -99,7 +153,6 @@ class vGraph:
 				visited.append(vertex)
 				vertex.setcolor(color[level])
 				qu.append(vertex.getname())
-		#print(qu)
 		
 		while(True):
 			# get first vertex

@@ -62,7 +62,7 @@ g.add("INPUT_4")
 
 print("==== Original graph ====")
 #print(g)
-g.show(None)
+#g.show(None)
 
 '''
 print("Write vertex graph into file")
@@ -93,10 +93,10 @@ print(g.gettrace())
 
 print("==== Invert graph ====")
 ig = g.invert()
-ig.show(None)
-#print(ig)
-#ig.bfs("^INPUT_", None, None)
 #ig.show(None)
+#print(ig)
+ig.bfs("^INPUT_", None, None)
+ig.show(None)
 
 '''
 print("==== BFS search adn draw color ====")
