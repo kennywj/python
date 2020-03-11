@@ -30,11 +30,11 @@ def show_progress(g, start_time):
 	print(" process number = " + str(count),end="\r")
 	return
 
-	
+
 def main():
 	# try to open read file
 	if len(sys.argv) <= 1:
-		print ("egraph2vgraph.py <inputfile>")
+		print ("gen_vgraph.py <input file> [output vgraph file] [invert vgraph file]")
 		sys.exit()
 	# generate edge graph
 	g = gen_egraph(sys.argv[1])
@@ -43,13 +43,18 @@ def main():
 		sys.exit()
 	else:
 		g.clear()
-	
-	print("\nWrite vertex graph into file")
-	vgraph_fname = input("input filename:")
-	
-	print("\nWrite invert vertex into file")
-	invert_vgraph_fname = input("input filename:")
-	
+
+	try:
+		vgraph_fname = sys.argv[2]
+	except:
+		print("\nWrite vertex graph into file")
+		vgraph_fname = input("input filename:")
+	try:
+		invert_vgraph_fname = sys.argv[3]
+	except:
+		print("\nWrite invert vertex into file")
+		invert_vgraph_fname = input("input filename:")
+
 	# Do DFS of edge graph to generate Vertex graph
 	start_time = time.time()
 	t = timer.RepeatTimer(0.5, show_progress, [g, start_time])
@@ -61,10 +66,10 @@ def main():
 		if re.search("^OUTPUT_",k):
 			print("\nDFS search start from " + k)
 			g.dfs(k, process, vg)
-	
+
 	# stop timer
 	t.cancel()
-	
+
 	# display invert vertex graph
 	try:
 		ofd = open(vgraph_fname, "w+")
@@ -77,14 +82,14 @@ def main():
 		ofd.close
 	except:
 		pass
-	
+
 	# trace invert vertex graph
 	try:
 		ofd = open(invert_vgraph_fname, "w+")
 	except:
 		print ("Could not open write file \"" + fname + "\"")
 		sys.exit()
-		
+
 	# invert vertex graph
 	ivg = vg.invert()
 	# show vertex graph (write to file)

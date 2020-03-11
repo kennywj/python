@@ -1,0 +1,27 @@
+
+All programs work on python3
+
+1. translate NCL format netlist firl to internal presentation
+	Usage: trans.py <inputfile> [<outputfile>]
+	for example:
+	$python3 trans.py ../../data/ncl_mac.v result
+
+2. Generate vertex graph from translated result of NCL format netlist file.
+	It should first generate edge graph, then do DFS search on edge graph to find all paths from OUTPUT node to INPUT node,
+	and then process each path to generate vertex graph.
+	The vertex graph is a graph start from OUTPUT node to INPUT node of edge graph.
+	The invert graph is a graph start from INPUT node to OUTPUT node of edge graph.
+	
+	Usage: gen_vgraph.py <inputfile> [output vertex graph file] [output invert vertex file]
+	for example:
+	$python3 gen_vgraph.py result vgraph.out ivgraph.out
+
+3. Read vertex graph from file to object in memory for furteher processing.
+	Usage: file2vgraph.py <input file>
+	for example:
+	$python3 file2vgraph.py vgraph.out
+	
+	
+
+
+
