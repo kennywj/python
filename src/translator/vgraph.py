@@ -32,9 +32,9 @@ def show(g, l, msg):
 			s += "=>"
 	if msg:
 		s += msg
-	print(s)	
+	print(s)
 	return
-	
+
 class vGraph:
 	# graph is a dictionary, key is in/out edge, data is vertex, color and out/in edge
 	def __init__(self):
@@ -109,8 +109,8 @@ class vGraph:
 					self.dfs(vname, func, arg)
 		self.path.pop()
 		return
-	
-	# To use DFS checks the vertex graph 	
+
+	# To use DFS checks the vertex graph
 	def cyclic_check(self, iv):
 		# do cyclic check
 		kl = list(self.items.keys())
@@ -120,7 +120,7 @@ class vGraph:
 				self.dfs(k, None, None)
 		self.do_cyclic_check = True
 		return
-		
+
 	def iscyclic(self):
 		# the function should do DFS first
 		if not self.do_cyclic_check:
@@ -135,7 +135,7 @@ class vGraph:
 			if v.getib():
 				return v.getib()
 		return False
-		
+
 	def bfs(self, keys, func, arg):
 		# BFS search vertex in graph
 		color=["white","gray","red"]
@@ -153,7 +153,7 @@ class vGraph:
 				visited.append(vertex)
 				vertex.setcolor(color[level])
 				qu.append(vertex.getname())
-		
+
 		while(True):
 			# get first vertex
 			if qu:
@@ -168,7 +168,7 @@ class vGraph:
 				if not qu:
 					break;	# no other vertex, exit loop
 				vname = qu.pop(0)
-				
+
 			self.trace.append(vname)
 			# get data in dictionary by vertex name
 			vertex = self.items[vname]
@@ -181,7 +181,7 @@ class vGraph:
 				for i in n:
 					vname = i.getname()
 					v = self.items[vname]
-					
+
 					if not v.getcolor():
 						v.setcolor(color[level])
 					elif v.getcolor()==color[level]:
@@ -189,7 +189,7 @@ class vGraph:
 					else:
 						print("Warning: " + vname + " try to set " + color[level] + \
 							" but it had set " +  v.getcolor())
-					
+
 					if vname not in visited:
 						#qu.append(vname)
 						children.append(vname)
@@ -216,20 +216,20 @@ class vGraph:
 				for e in i.getedge():
 					v.addneighbor(k,e)
 		return g
-		
+
 	def gettrace(self):
 		return self.trace
 
 	def cleartrace(self):
 		self.trace.clear()
 		return
-		
+
 	def clear(self):
 		self.count = 0
 		self.trace.clear()
 		self.path.clear()
 		return
-		
+
 	def __repr__(self):
 		s=""
 		keys = self.items.keys()
@@ -238,7 +238,7 @@ class vGraph:
 			v = self.items[k]
 			s += str(v)+"\n"
 		return s
-		
+
 	def show(self, fd):
 		keys = self.items.keys()
 		for k in keys:
@@ -252,8 +252,8 @@ class vGraph:
 			# get diction's data element
 			v = self.items[k]
 			v.setgroup(0)
-		return	
-	# show all vertex's group 	
+		return
+	# show all vertex's group
 	def showgroup(self, num):
 		keys = self.items.keys()
 		n=0
@@ -267,3 +267,6 @@ class vGraph:
 				print("\n")
 		print("\n")
 		return
+
+	def __len__(self):
+		return len(self.items)

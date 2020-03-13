@@ -6,7 +6,6 @@ import re
 import time
 from datetime import timedelta
 import sys
-sys.path.append('../')
 import egraph
 import vgraph
 from gengraph import gen_egraph
@@ -14,13 +13,13 @@ from gengraph import process
 import timer
 
 #
-# egraph2vgraph.py
+# gen_vgraph.py
 #
 #	To convert edge graph file into vertex graph object (python dictionary) and then write to file.
 #  The edge graph file from NCL netlist file converted by trans.py 
 #
 #	Usage:
-#		$python3 egraph2vgraph.py <vgraph file>
+#		$python3 gen_vgraph.py <vgraph file>
 #
 
 def show_progress(g, start_time):

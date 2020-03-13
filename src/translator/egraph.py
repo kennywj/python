@@ -12,7 +12,18 @@ def show(n, l):
 	return
 '''
 def show(n, l):
-	print(l)
+	# get last element's index, if not equal, it have same node in path
+	idx = l.index(l[-1]) 
+	if idx != (len(l)-1):
+		s = "(Loop)"
+	else:
+		s = ""
+	print("path ("+ str(n)+ "):", end="")
+	while(l):
+		print(l.pop(0),end='')
+		if len(l)!=0:
+			print("->",end="")
+	print( s + '\n')
 	return
 	
 class eGraph:
@@ -75,7 +86,7 @@ class eGraph:
 
 	def dfs(self, k, func, arg):
 		if not self.items.get(k):
-			print("node " + k + " not exist!")
+			#print("node " + k + " not exist!")
 			return
 		n = self.items[k]
 		e = n.getedge()
@@ -93,11 +104,21 @@ class eGraph:
 			if func!=None:
 				func(arg, l)
 			else:
-				show(None, l)
+				show(self.count, l)
 		else:
 			# for each edge in list, do deep seach
 			for i in e:
-				self.dfs(i, func, arg)
+				l = self.path.get()
+				# detect loop
+				if i in l:
+					l = l.copy()
+					self.count += 1
+					if func!=None:
+						func(arg, l)
+					else:
+						show(self.count, l)
+				else:
+					self.dfs(i, func, arg)
 		#pop vertex from stack
 		self.path.pop()
 		#pop edge from stack

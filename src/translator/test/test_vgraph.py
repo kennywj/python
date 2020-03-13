@@ -61,7 +61,8 @@ g.add("INPUT_4")
 
 
 print("==== Original graph ====")
-#print(g)
+print(len(g))
+print(g)
 #g.show(None)
 
 '''
@@ -90,14 +91,14 @@ g.dfs("OUTPUT_1", None, None)
 print(g.gettrace())
 '''
 
-
+'''
 print("==== Invert graph ====")
 ig = g.invert()
 #ig.show(None)
 #print(ig)
 ig.bfs("^INPUT_", None, None)
 ig.show(None)
-
+'''
 '''
 print("==== BFS search adn draw color ====")
 keys = g.getkeys()

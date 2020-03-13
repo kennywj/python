@@ -78,7 +78,7 @@ def add_netdb(line, db):
 #
 def gen_egraph(file):
 	data = ""
-	print("\nDo generate graph...");
+	print("\nDo generate edge graph...");
 	# try to open read file
 	try:
 		ifd = open(file, "r")
