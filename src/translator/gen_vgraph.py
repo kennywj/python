@@ -97,6 +97,9 @@ def main():
 		ofd.close
 	except:
 		pass
+
+	elapsed_time = time.time() - start_time
+	print("\nprocess time: "+str(timedelta(seconds=int(elapsed_time))))
 #
 # end main progam
 #
