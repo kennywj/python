@@ -66,12 +66,17 @@ def do_io(k, v, ln):
 	outstr=""
 	if l == r:
 		outstr = k.upper()+'_'+str(ln) + '_' + str(index) + '(' + r + ')' + '\n'
-	else:
+	elif '[' in r and ']' in r:
 		r = r.replace('[', '').replace(']', '').split(':')
 		end = max(int(r[0]),int(r[1]))
 		start = min(int(r[0]),int(r[1]))
 		for i in range(end, start-1, -1):
 			outstr += k.upper()+'_'+str(ln)+ '_' + str(index) + '(' + l + '[' + str(i) + '])' +'\n'
+			index += 1
+	else:
+		l = v.replace(' ','').split(',')
+		for i in l:
+			outstr += k.upper()+'_'+str(ln)+ '_' + str(index) + '(' +  str(i) + ')' +'\n'
 			index += 1
 	return outstr
 
@@ -122,15 +127,22 @@ def main():
 		pass
 
 	# repeat read line from file
+	s = ""
 	for line in ifd:
 		global ln
+		if line.find(';')==-1:	# not find
+			line = line.rstrip()
+			s += line
+			continue
 		ln+=1
-		data = parse(line, ln)
+		s += line
+		data = parse(s, ln)
 		# try to write data into file
 		try:
 			ofd.write(data)
 		except:
 			print(data, end='')
+		s = ""
 	# close read file
 	ifd.close()
 
