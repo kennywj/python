@@ -1,0 +1,340 @@
+{
+	"target":"s7_cm4.cpu",
+	
+	"uart0": {
+		"enable":true,
+		"base":"44083000",
+		"regs":{
+			"RBR":{
+				"offset":	"0x00000000", 
+				"type":		"ro",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xffffff00"},
+				
+			"THR":{
+				"offset":	"0x00000000", 
+				"type":		"wo",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xffffff00"},
+	
+			"IER":{
+				"offset":	"0x00000004", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xfffffff0"},
+	
+			"IIR":{
+				"offset":	"0x00000008", 
+				"type":		"ro",
+				"enable":	true,
+				"default":	"0x000000C1",
+				"mask":		"0xffffff00"},
+	
+			"FCR":{
+				"offset":	"0x00000008", 
+				"type":		"wo",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xffffff00"},
+		
+			"LCR":{
+				"offset":	"0x0000000C", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000003",
+				"mask":		"0xffffff00"},	
+	
+			"MCR":{
+				"offset":	"0x00000010", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xffffffe0"},
+	
+			"LSR":{
+				"offset":	"0x00000014", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000060",
+				"mask":		"0xffffff00"},
+	
+			"MSR":{
+				"offset":	"0x00000018", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xffffff00"},
+	
+			"DLL":{
+				"offset":	"0x00000028", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xfffffff0"}
+		}
+	},
+	"uart1": {
+		"enable":true,
+		"base":"44084000",
+		"regs":{
+			"RBR":{
+				"offset":	"0x00000000", 
+				"type":		"ro",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xffffff00"},
+				
+			"THR":{
+				"offset":	"0x00000000", 
+				"type":		"wo",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xffffffff"},
+	
+			"IER":{
+				"offset":	"0x00000004", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xfffffff0"},
+	
+			"IIR":{
+				"offset":	"0x00000008", 
+				"type":		"ro",
+				"enable":	true,
+				"default":	"0x000000C1",
+				"mask":		"0xffffffff"},
+	
+			"FCR":{
+				"offset":	"0x00000008", 
+				"type":		"wo",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xffffff00"},
+		
+			"LCR":{
+				"offset":	"0x0000000C", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000003",
+				"mask":		"0xffffff00"},	
+	
+			"MCR":{
+				"offset":	"0x00000010", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xffffffe0"},
+	
+			"LSR":{
+				"offset":	"0x00000014", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000060",
+				"mask":		"0xffffff00"},
+	
+			"MSR":{
+				"offset":	"0x00000018", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xffffff00"},
+	
+			"DLL":{
+				"offset":	"0x00000028", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xfffffff0"}
+		}
+	},
+	
+	"timer0": {
+		"enable":true,
+		"base":"0x44080000",
+		"regs":{
+			"TMR0LR":{
+				"offset":	"0x00000000", 
+				"type":		"wo",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0x00000000"},
+			
+			"TMR0CVR":{
+				"offset":	"0x00000004", 
+				"type":		"ro",
+				"enable":	true,
+				"default":	"0xffffffff",
+				"mask":		"0x00000000"},
+			
+			"TMR0CON":{
+				"offset":	"0x00000008", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000002",
+				"mask":		"0xfffff801"},
+			
+			"TMR1LR":{
+				"offset":	"0x00000010",
+				"type":		"wo",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0x00000000"},
+			
+			"TMR1CVR":{
+				"offset":	"0x00000014", 
+				"type":		"ro",
+				"enable":	true,
+				"default":	"0xffffffff",
+				"mask":		"0x00000000"},
+			
+			"TMR1CON":{
+				"offset":	"0x00000018", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000002",
+				"mask":		"0xfffff801"},
+			
+			"TMR2LR":{
+				"offset":	"0x00000020", 
+				"type":		"wo",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0x00000000"},
+			
+			"TMR2CVR":{
+				"offset":	"0x00000024", 
+				"type":		"ro",
+				"enable":	true,
+				"default":	"0xffffffff",
+				"mask":		"0x00000000"},
+			
+			"TMR2CON":{
+				"offset":	"0x00000028", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000002",
+				"mask":		"0xfffff801"},
+			
+			"TMRMODE":{
+				"offset":	"0x00000030", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xfffffffc"}
+		}
+	},
+	
+	"timer1": {
+		"enable":false,
+		"base":"0x44081000",
+		"regs":{
+			"TMR0LR":{
+				"offset":	"0x00000000", 
+				"type":		"wo",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0x00000000"},
+			
+			"TMR0CVR":{
+				"offset":	"0x00000004", 
+				"type":		"ro",
+				"enable":	true,
+				"default":	"0xffffffff",
+				"mask":		"0x00000000"},
+			
+			"TMR0CON":{
+				"offset":	"0x00000008", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000002",
+				"mask":		"0xfffff801"},
+			
+			"TMR1LR":{
+				"offset":	"0x00000010",
+				"type":		"wo",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0x00000000"},
+			
+			"TMR1CVR":{
+				"offset":	"0x00000014", 
+				"type":		"ro",
+				"enable":	true,
+				"default":	"0xffffffff",
+				"mask":		"0x00000000"},
+			
+			"TMR1CON":{
+				"offset":	"0x00000018", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000002",
+				"mask":		"0xfffff801"},
+			
+			"TMR2LR":{
+				"offset":	"0x00000020", 
+				"type":		"wo",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0x00000000"},
+			
+			"TMR2CVR":{
+				"offset":	"0x00000024", 
+				"type":		"ro",
+				"enable":	true,
+				"default":	"0xffffffff",
+				"mask":		"0x00000000"},
+			
+			"TMR2CON":{
+				"offset":	"0x00000028", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000002",
+				"mask":		"0xfffff801"},
+			
+			"TMRMODE":{
+				"offset":	"0x00000030", 
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xfffffffc"}
+		}
+	},
+	
+	"watchdog": {
+		"enable":true,
+		"base":"0x44082000",
+		"regs":{
+			"WDT_TOP_IN":{
+				"offset":	"0x00000000",
+				"type":		"wo",
+				"enable":	true,
+				"default":	"0x3fffffff",
+				"mask":		"0xC0000000"},
+				
+			"WDT_START_CMD":{
+				"offset":	"0x00000004",
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000076",
+				"mask":		"0xffffff00"},
+				
+			"WDT_RMOD_IN":{
+				"offset":	"0x00000008",
+				"type":		"rw",
+				"enable":	true,
+				"default":	"0x00000001",
+				"mask":		"0xfffffffe"},
+			
+			"WDT_CVR":{
+				"offset":	"0x0000000C",
+				"type":		"ro",
+				"enable":	true,
+				"default":	"0x00000000",
+				"mask":		"0xC0000000"}
+		}
+	}
+}

@@ -1,0 +1,22 @@
+;; simple block copy ;; MFIFO data buffer resource requirement: SR 0 DR 16 
+DMAMOV SAR 0xF0000000 	;; start address
+DMAMOV DAR 0x20000000 	;; end address
+;; loop start
+DMAMOV CCR SB1 SS8 DB2 DS32 ;;; ES32 ;;DAF
+
+DMALP lc0 256
+	DMAADDH SAR, 4064
+	DMALP lc1 8
+		DMALD
+		DMAADDH SAR, 3 ;; subtract 2 to skip back 
+	DMALPEND lc1
+	DMAST
+DMALPEND lc0 
+
+DMAWMB
+DMASEV e3
+
+DMAEND
+;; start DMA program instructuion
+;; this command should be placed at end of program
+DMAGO c7 0x1fff0000
